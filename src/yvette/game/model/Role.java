@@ -52,10 +52,6 @@ public abstract class Role {
 		return mW;
 	}
 
-	public int getScore() {
-		return 0;
-	}
-
 	public void setX(int x) {
 		mX = x;
 	}

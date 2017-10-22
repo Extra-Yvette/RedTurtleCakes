@@ -19,7 +19,6 @@ public class Score extends Role {
 	/**
 	 * 取得總分
 	 */
-	@Override
 	public int getScore() {
 		return mScore;
 	}
