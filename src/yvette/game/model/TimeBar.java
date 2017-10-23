@@ -15,7 +15,7 @@ public class TimeBar extends Role implements Runnable{
 	private OnTimeBarTimeoutListener mOnTimeBarTimeoutListener;
 	
 	public TimeBar(){
-		mTimeCountdown = new Thread(this);
+		mTimeCountdown = new Thread(TimeBar.this);
 		mTimeCountdown.start();
 	}
 	
@@ -33,7 +33,6 @@ public class TimeBar extends Role implements Runnable{
 		
 		canvas.setColor(getColor());
 		canvas.fillRect(getX(), getY(), (int)(getW() * percent), getH());
-		
 	}
 
 	/**

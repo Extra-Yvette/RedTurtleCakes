@@ -2,7 +2,7 @@ package yvette.game;
 
 public class Config {
 	private int mFlySpeed;
-	private int mCakeChangeTime = 10;
+	private int mCakeChangeTime = 5;
 
 	/**
 	 * 蒼蠅飛行速度
