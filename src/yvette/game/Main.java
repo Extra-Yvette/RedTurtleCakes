@@ -14,6 +14,7 @@ public class Main {
 
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(cakes.getGameCanvas());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 530, 320);
 		frame.setResizable(false);
 		frame.setVisible(true);
