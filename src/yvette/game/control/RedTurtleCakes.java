@@ -5,11 +5,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 import yvette.game.Config;
+import yvette.game.model.OnTimeBarTimeoutListener;
 import yvette.game.model.Score;
 import yvette.game.model.TimeBar;
 import yvette.game.view.GameCanvas;
 
-public class RedTurtleCakes implements MouseMotionListener {
+public class RedTurtleCakes implements MouseMotionListener, OnTimeBarTimeoutListener {
 	private static RedTurtleCakes sInstance = new RedTurtleCakes();
 	private GameCanvas mGameCanvas;
 
@@ -55,6 +56,7 @@ public class RedTurtleCakes implements MouseMotionListener {
 		mTimeBar.setH(20);
 		mTimeBar.setSecond(config.getCakeChangeTime());
 		mTimeBar.setMaxSecond(config.getCakeChangeTime());
+		mTimeBar.setOnTimeBarTimeoutListener(this);
 		mGameCanvas.addRole(mTimeBar);
 	}
 
@@ -75,5 +77,11 @@ public class RedTurtleCakes implements MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onTimeBarTimeout() {
+		// TimeBar,時間到，變換粿
+		System.out.println("TimeBar,時間到，變換粿");
 	}
 }

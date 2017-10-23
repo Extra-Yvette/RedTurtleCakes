@@ -12,10 +12,15 @@ public class TimeBar extends Role implements Runnable{
 	private int mSecond;
 	private int mMaxSecond;
 	private Thread mTimeCountdown;
+	private OnTimeBarTimeoutListener mOnTimeBarTimeoutListener;
 	
 	public TimeBar(){
 		mTimeCountdown = new Thread(this);
 		mTimeCountdown.start();
+	}
+	
+	public void setOnTimeBarTimeoutListener(OnTimeBarTimeoutListener listener){
+		mOnTimeBarTimeoutListener = listener;
 	}
 
 	@Override
@@ -77,7 +82,9 @@ public class TimeBar extends Role implements Runnable{
 			
 			if(mSecond < 0){
 				mSecond = mMaxSecond;
-				System.out.println("TimeBar,時間到");
+				if(mOnTimeBarTimeoutListener != null){
+					mOnTimeBarTimeoutListener.onTimeBarTimeout();
+				}
 			}
 		}
 	}
