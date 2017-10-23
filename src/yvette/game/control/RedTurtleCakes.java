@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import yvette.game.Config;
 import yvette.game.model.Score;
+import yvette.game.model.TimeBar;
 import yvette.game.view.GameCanvas;
 
 public class RedTurtleCakes implements MouseMotionListener {
@@ -13,6 +14,9 @@ public class RedTurtleCakes implements MouseMotionListener {
 	private GameCanvas mGameCanvas;
 
 	private Config mConfig;
+	
+	private TimeBar mTimeBar;
+	private Score mScoreBar;
 
 	public static RedTurtleCakes getInstance() {
 		return sInstance;
@@ -24,15 +28,34 @@ public class RedTurtleCakes implements MouseMotionListener {
 		mGameCanvas = new GameCanvas();
 		mGameCanvas.start();
 
-		// 初始化總分分數面版
-		Score scoreBar = new Score();
-		scoreBar.setColor(Color.BLACK);
-		scoreBar.setX(10);
-		scoreBar.setY(10);
-		scoreBar.setW(100);
-		scoreBar.setH(30);
+		initScoreBar(config);
+		initTimeBar(config);
+		
+		mGameCanvas.addMouseMotionListener(this);
+		
+	}
+	
+	// 初始化總分分數面版
+	private void initScoreBar(Config config){
+		mScoreBar = new Score();
+		mScoreBar.setColor(Color.BLACK);
+		mScoreBar.setX(300);
+		mScoreBar.setY(22);
+		mScoreBar.setW(100);
+		mScoreBar.setH(30);
+		mGameCanvas.addRole(mScoreBar);
+	}
 
-		mGameCanvas.addRole(scoreBar);
+	private void initTimeBar(Config config){
+		mTimeBar = new TimeBar();
+		mTimeBar.setColor(Color.PINK);
+		mTimeBar.setX(10);
+		mTimeBar.setY(10);
+		mTimeBar.setW(200);
+		mTimeBar.setH(20);
+		mTimeBar.setSecond(config.getCakeChangeTime());
+		mTimeBar.setMaxSecond(config.getCakeChangeTime());
+		mGameCanvas.addRole(mTimeBar);
 	}
 
 	public Config getConfig() {
@@ -52,7 +75,5 @@ public class RedTurtleCakes implements MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
-
 }

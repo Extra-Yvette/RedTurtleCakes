@@ -12,8 +12,8 @@ public class Score extends Role {
 
 	@Override
 	public void onDraw(Graphics canvas) {
+		canvas.setColor(getColor());
 		canvas.drawString("總分 : " + mScore, getX(), getY());
-		addScore(1);
 	}
 
 	/**
