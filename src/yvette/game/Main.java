@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		RedTurtleCakes cakes = RedTurtleCakes.getInstance();
 
-		// 戴入設定檔
+		//載入設定檔
 		Config config = new Config();
 		cakes.initialize(config);
 
