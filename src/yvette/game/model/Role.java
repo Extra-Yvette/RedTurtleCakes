@@ -15,9 +15,15 @@ public abstract class Role {
 	private int mH;
 	private Color mColor;
 	private boolean mIsAlve;
+	private boolean mEnableCenter;
 
 	public Role() {
 		mIsAlve = true;
+		mEnableCenter = false;
+	}
+	
+	public void setEnableCenter(boolean enable) {
+		mEnableCenter = enable;
 	}
 
 	/**
@@ -27,20 +33,26 @@ public abstract class Role {
 	 * @return
 	 */
 	public boolean hitTest(Role obj) {
-		int hx = obj.mX;
-		int hy = obj.mY;
+		int hx = obj.getX();
+		int hy = obj.getY();
 		int hh = obj.mH;
 		int hw = obj.mW;
 
-		return ((hx + hw > mX) && (hx < mX + mW) && (hy + hh > mY) && (hy < mY
+		return ((hx + hw > getX()) && (hx < getX() + mW) && (hy + hh > getY()) && (hy < getY()
 				+ mH));
 	}
 
 	public int getX() {
+		if(mEnableCenter) {
+			return mX - (mW / 2);
+		}
 		return mX;
 	}
 
 	public int getY() {
+		if(mEnableCenter) {
+			return mY - (mH / 2);
+		}
 		return mY;
 	}
 

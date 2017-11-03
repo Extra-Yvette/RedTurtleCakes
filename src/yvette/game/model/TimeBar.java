@@ -13,10 +13,23 @@ public class TimeBar extends Role implements Runnable{
 	private int mMaxSecond;
 	private Thread mTimeCountdown;
 	private OnTimeBarTimeoutListener mOnTimeBarTimeoutListener;
+	private boolean mIsPause;
 	
 	public TimeBar(){
+		mIsPause = true;
 		mTimeCountdown = new Thread(TimeBar.this);
 		mTimeCountdown.start();
+	}
+	
+	public void pause() {
+		mIsPause = true;
+	}
+	
+	public void resume() {
+		mIsPause = false;
+		synchronized(this) {
+			notifyAll();
+		}
 	}
 	
 	public void setOnTimeBarTimeoutListener(OnTimeBarTimeoutListener listener){
@@ -71,7 +84,16 @@ public class TimeBar extends Role implements Runnable{
 
 	@Override
 	public void run() {
-		while(true){
+		while(isALive()){
+			if(mIsPause) {
+				synchronized(this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

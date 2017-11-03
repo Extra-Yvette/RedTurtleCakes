@@ -118,10 +118,12 @@ public class GameCanvas extends Canvas implements Runnable {
 
 	private void onDraw(Graphics canvas) {
 		// 繪制全部場景上的角色
+		for (Role obj : mRoles) {
+			obj.onDraw(canvas);
+		}
+		
 		for (int i = mRoles.size() - 1; i >= 0; i--) {
 			Role obj = mRoles.get(i);
-			obj.onDraw(canvas);
-
 			// 若場景上角色已不存活，將它移除
 			if (!obj.isALive()) {
 				mRoles.remove(obj);
