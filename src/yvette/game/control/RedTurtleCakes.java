@@ -114,9 +114,12 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		readyStartGame.setColor(Color.WHITE);
 		readyStartGame.setW(config.getScreenWidth());
 		readyStartGame.setH(config.getScreenHeight());
+		//在畫面上首頁按下滑鼠觸發事件
 		readyStartGame.setOnClickListener(() ->{
 			System.out.println("start game");
 			readyStartGame.setIsAlive(false);
+			mTools.remove(readyStartGame);
+			//開始進行計時，進行遊戲
 			mTimeBar.resume();
 		});
 		mTools.add(readyStartGame);
