@@ -142,12 +142,13 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	private void initCurrentTool() {
 		mCurrentTool = new Role(){
 			public void onDraw(Graphics canvas) {
-				canvas.setColor(getColor());
-				canvas.fillArc(getX(), getY(), getW(), getH(), 0, 360);
+				if(getColor() != null) {
+					canvas.setColor(getColor());
+					canvas.fillArc(getX(), getY(), getW(), getH(), 0, 360);
+				}
 			}
 		};
 		mCurrentTool.setEnableCenter(true);
-		mCurrentTool.setColor(Color.WHITE);
 		mCurrentTool.setW(50);
 		mCurrentTool.setH(50);
 		
