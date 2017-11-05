@@ -3,7 +3,7 @@ package yvette.game.model;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Cake extends Role {
+public class Cake extends ClickableRole {
 	private CakeType mType;
 	
 	public void setCakeType(CakeType type) {

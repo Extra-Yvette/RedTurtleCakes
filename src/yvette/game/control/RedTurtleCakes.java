@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Random;
 
 import yvette.game.Config;
-import yvette.game.model.AbstractTool;
+import yvette.game.model.ClickableRole;
+import yvette.game.model.MouseDragTool;
 import yvette.game.model.Cake;
 import yvette.game.model.CakeType;
 import yvette.game.model.OnClickListener;
 import yvette.game.model.OnTimeBarTimeoutListener;
 import yvette.game.model.ReadDot;
+import yvette.game.model.ReadyStartGame;
 import yvette.game.model.Role;
 import yvette.game.model.Score;
 import yvette.game.model.TimeBar;
@@ -29,6 +31,8 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	private GameCanvas mGameCanvas;
 	//設定檔
 	private Config mConfig;
+	//開場的畫面，等待玩家按下滑鼠
+	private ReadyStartGame mReadyStartGame;
 	//時間bar
 	private TimeBar mTimeBar;
 	//要被打的粿
@@ -36,15 +40,15 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	//總分bar
 	private Score mScoreBar;
 	//畫面下方4個按鈕
-	private List<AbstractTool> mTools;
+	private List<ClickableRole> mClickableRole;
 	//目前跟隨滑鼠鼠標移動中的工具
-	private Role mCurrentTool;
+	private MouseDragTool mMouseDragTool;
 	//用來產生隨機亂數的物件
 	private Random mRandom;
 
 	private RedTurtleCakes(){
 		mRandom = new Random();
-		mTools = new ArrayList<AbstractTool>();
+		mClickableRole = new ArrayList<ClickableRole>();
 	}
 
 	public static RedTurtleCakes getInstance() {
@@ -69,61 +73,20 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	
 	//初始化首頁顯示請用滑鼠點擊畫面開始遊戲
 	private void initReadyStartGame(Config config) {
-		AbstractTool readyStartGame = new AbstractTool(){
-			private int mColorAlpha = 0;
-			private int mAlphaFlag = 8;
-			private Font mTitleFont;
-			private Font mPressStartFont;
-			
-			public void onDraw(Graphics canvas) {
-				canvas.setColor(getColor());
-				canvas.fillRect(getX(), getY(), getW(), getH());
-				Font currentFont = canvas.getFont();
-				
-				//設定首頁紅龜粿字型大小
-				if (mTitleFont == null) {
-					mTitleFont = currentFont.deriveFont(Font.ITALIC, 72);
-				}
-				canvas.setFont(mTitleFont);
-				
-				canvas.setColor(Color.RED);
-				canvas.drawString("紅龜粿", config.getScreenWidth() / 2 - 120, config.getScreenHeight() / 2 - 40);
-				canvas.setFont(currentFont);
-				
-				//讓文字淡入淡出效果
-				mColorAlpha += mAlphaFlag;
-				if(mColorAlpha > 255) {
-					mColorAlpha = 255;
-					mAlphaFlag = -mAlphaFlag;
-				}
-				if(mColorAlpha < 0) {
-					mColorAlpha = 0;
-					mAlphaFlag = -mAlphaFlag;
-				}
-				
-				//設定首頁"請用滑鼠點擊畫面後開始遊戲"字型大小
-				if (mPressStartFont == null) {
-					mPressStartFont = currentFont.deriveFont(Font.BOLD, 24);
-				}
-				canvas.setFont(mPressStartFont);
-				canvas.setColor(new Color(0, 0, 255, mColorAlpha));
-				canvas.drawString("請用滑鼠點擊畫面後開始遊戲", 100, config.getScreenHeight() / 2 + 50);
-				canvas.setFont(currentFont);
-			}
-		};
-		readyStartGame.setColor(Color.WHITE);
-		readyStartGame.setW(config.getScreenWidth());
-		readyStartGame.setH(config.getScreenHeight());
+		mReadyStartGame = new ReadyStartGame();
+		mReadyStartGame.setColor(Color.WHITE);
+		mReadyStartGame.setW(config.getScreenWidth());
+		mReadyStartGame.setH(config.getScreenHeight());
 		//在畫面上首頁按下滑鼠觸發事件
-		readyStartGame.setOnClickListener(() ->{
+		mReadyStartGame.setOnClickListener(() ->{
 			System.out.println("start game");
-			readyStartGame.setIsAlive(false);
-			mTools.remove(readyStartGame);
+			mReadyStartGame.setIsAlive(false);
+			mClickableRole.remove(mReadyStartGame);
 			//開始進行計時，進行遊戲
 			mTimeBar.resume();
 		});
-		mTools.add(readyStartGame);
-		mGameCanvas.addRole(readyStartGame);
+		mClickableRole.add(0, mReadyStartGame);
+		mGameCanvas.addRole(mReadyStartGame);
 	}
 	
 	//初始化畫面上的粿
@@ -134,25 +97,32 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mCake.setW(50);
 		mCake.setH(50);
 		
+		mCake.setOnClickListener(() -> {
+			System.out.println("打到了" + mCake.getCakeType().name());
+			switch(mCake.getCakeType()){
+				case RED:
+					break;
+				case GREEN:
+					break;
+				case WHITE:
+					break;
+					default:
+			}
+		});
+		
 		randomChangeCake();
 		mGameCanvas.addRole(mCake);
+		mClickableRole.add(mCake);
 	}
 	
 	//初始化跟著滑鼠鼠標移動的工具
 	private void initCurrentTool() {
-		mCurrentTool = new Role(){
-			public void onDraw(Graphics canvas) {
-				if(getColor() != null) {
-					canvas.setColor(getColor());
-					canvas.fillArc(getX(), getY(), getW(), getH(), 0, 360);
-				}
-			}
-		};
-		mCurrentTool.setEnableCenter(true);
-		mCurrentTool.setW(50);
-		mCurrentTool.setH(50);
+		mMouseDragTool = new MouseDragTool();
+		mMouseDragTool.setEnableCenter(true);
+		mMouseDragTool.setW(50);
+		mMouseDragTool.setH(50);
 		
-		mGameCanvas.addRole(mCurrentTool);
+		mGameCanvas.addRole(mMouseDragTool);
 	}
 
 	// 初始化總分分數面版
@@ -178,11 +148,11 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		whitePeach.setOnClickListener(() -> {
 			// TODO 點到了WhitePeach按鈕
 			System.out.println("點到了WhitePeach按鈕");
-			mCurrentTool.setColor(Color.CYAN);
+			mMouseDragTool.setColor(Color.CYAN);
 		});
 
 		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
-		mTools.add(whitePeach);
+		mClickableRole.add(whitePeach);
 		mGameCanvas.addRole(whitePeach);
 		//範例按鈕-----end-----
 
@@ -197,11 +167,11 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		readDot.setOnClickListener(()->{
 			// TODO 點到了WhitePeach按鈕
 			System.out.println("點到了ReadDot按鈕");
-			mCurrentTool.setColor(Color.RED);
+			mMouseDragTool.setColor(Color.RED);
 		});
 
 		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
-		mTools.add(readDot);
+		mClickableRole.add(readDot);
 		mGameCanvas.addRole(readDot);
 		//範例按鈕-----end-----
 
@@ -253,8 +223,8 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	//滑鼠移動事件
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		mCurrentTool.setX(e.getX());
-		mCurrentTool.setY(e.getY());
+		mMouseDragTool.setX(e.getX());
+		mMouseDragTool.setY(e.getY());
 	}
 
 	//時間條倒數完時，時間到事件
@@ -271,8 +241,8 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		//滑鼠點了左鍵
 		if(e.getButton() == MouseEvent.BUTTON1){
 			//把畫面上4個按鈕取出來判斷有哪個按鈕與滑鼠碰撞
-			for(AbstractTool tool : mTools){
-				if(tool.hitTest(mCurrentTool)){
+			for(ClickableRole tool : mClickableRole){
+				if(tool.hitTest(mMouseDragTool)){
 					tool.onClick();
 					break;
 				}

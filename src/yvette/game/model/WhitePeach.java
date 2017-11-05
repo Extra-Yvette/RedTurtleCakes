@@ -1,5 +1,5 @@
 package yvette.game.model;
 
 
-public class WhitePeach extends AbstractTool{
+public class WhitePeach extends ClickableRole{
 }

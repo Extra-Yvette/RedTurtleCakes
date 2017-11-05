@@ -3,7 +3,7 @@ package yvette.game.model;
 import java.awt.Graphics;
 
 
-public abstract class AbstractTool extends Role{
+public abstract class ClickableRole extends Role{
 	private OnClickListener mOnClickListener;
 	
 	@Override
