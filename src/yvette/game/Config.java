@@ -3,14 +3,16 @@ package yvette.game;
 public class Config {
 	private int mFlySpeed;
 	private int mCakeChangeTime = 5;
-	private int mScreenWidth = 530;
-	private int mScreenHeight = 320;
+	private int mScreenWidth = 720;
+	private int mScreenHeight = 480;
 	//敲紅龜粿可獲得分數
 	private int mRedScore = 100;
 	//敲草阿粿可獲得分數
 	private int mGreenScore = 200;
 	//敲草壽桃可獲得分數
 	private int mWhiteScore = 300;
+	//玩家每次重新開始玩遊戲的愛心個數
+	private int mLifeDefault = 5;
 
 	/**
 	 * 蒼蠅飛行速度
@@ -66,5 +68,13 @@ public class Config {
 	 */
 	public int getWhiteScore() {
 		return mWhiteScore;
+	}
+	
+	/**
+	 * 玩家每次重新開始玩遊戲的愛心個數
+	 * @return
+	 */
+	public int getLifeDefault(){
+		return mLifeDefault;
 	}
 }

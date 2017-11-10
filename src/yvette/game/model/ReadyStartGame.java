@@ -50,7 +50,7 @@ public class ReadyStartGame extends ClickableRole{
 		}
 		canvas.setFont(mPressStartFont);
 		canvas.setColor(new Color(0, 0, 255, mColorAlpha));
-		canvas.drawString("請用滑鼠點擊畫面後開始遊戲", 100, config.getScreenHeight() / 2 + 50);
+		canvas.drawString("請用滑鼠點擊畫面後開始遊戲", (config.getScreenWidth() / 2) - 180, config.getScreenHeight() / 2 + 50);
 		canvas.setFont(currentFont);
 	}
 }

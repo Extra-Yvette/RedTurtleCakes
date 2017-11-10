@@ -10,8 +10,11 @@ import java.util.Random;
 
 import yvette.game.Config;
 import yvette.game.model.ClickableRole;
+import yvette.game.model.Flyswatter;
+import yvette.game.model.LifeBar;
 import yvette.game.model.MouseDragTool;
 import yvette.game.model.Cake;
+import yvette.game.model.CakeMark;
 import yvette.game.model.CakeType;
 import yvette.game.model.OnTimeBarTimeoutListener;
 import yvette.game.model.ReadDot;
@@ -31,6 +34,8 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	private ReadyStartGame mReadyStartGame;
 	//時間bar
 	private TimeBar mTimeBar;
+	//愛心個數(玩家生命)bar
+	private LifeBar mLifeBar;
 	//要被打的粿
 	private Cake mCake;
 	//總分bar
@@ -56,17 +61,18 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		// 建立遊戲繪布
 		mGameCanvas = new GameCanvas();
 		initTools(config);
-		initCake();
-		initCurrentTool();
+		initCake(config);
+		initCurrentTool(config);
 		initScoreBar(config);
 		initTimeBar(config);
+		initLifeBar(config);
 		initReadyStartGame(config);
 
 		mGameCanvas.addMouseMotionListener(this);
 		mGameCanvas.addMouseListener(this);
 		mGameCanvas.start();
 	}
-	
+
 	//初始化首頁顯示請用滑鼠點擊畫面開始遊戲
 	private void initReadyStartGame(Config config) {
 		mReadyStartGame = new ReadyStartGame();
@@ -84,73 +90,91 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mClickableRole.add(0, mReadyStartGame);
 		mGameCanvas.addRole(mReadyStartGame);
 	}
-	
+
 	//初始化畫面上的粿
-	private void initCake() {
+	private void initCake(Config config) {
 		mCake = new Cake();
-		mCake.setX(200);
-		mCake.setY(100);
 		mCake.setW(50);
 		mCake.setH(50);
-		
+		mCake.setX(config.getScreenWidth() / 2 - mCake.getW());
+		mCake.setY(config.getScreenHeight() / 2 - mCake.getH());
+
 		mCake.setOnClickListener(() -> {
 			System.out.println("拿著["+mMouseDragTool.getCakeType()+"],場上的粿["+mCake.getCakeType()+"]");
 			//還沒選擇打粿的道具
 			if(mMouseDragTool.getCakeType() == null) {
 				return;
 			}
-			
+
 			//判斷滑鼠拿的道具是否對應可以打的粿
 			if(mMouseDragTool.getCakeType() == mCake.getCakeType()) {
-				//TODO 判斷滑鼠拖曳的道具打到了哪種粿
+				//TODO 判斷滑鼠拖曳的道具打到了哪種物品
 				switch(mCake.getCakeType()){
-					case RED:
-						hitReadCake();
-						break;
-					case GREEN:
-						hitGreenCake();
-						break;
-					case WHITE:
-						hitWhiteCake();
-						break;
-						default:
+				case RED:
+					hitReadCake();
+					break;
+				case GREEN:
+					hitGreenCake();
+					break;
+				case WHITE:
+					hitWhiteCake();
+					break;
+				case FLY:
+					hitFly();
+					break;
+				default:
 				}
+			}else{
+				//給錯工具
+				hitMiss();
 			}
 		});
-		
+
 		randomChangeCake();
 		mGameCanvas.addRole(mCake);
 		mClickableRole.add(mCake);
 	}
-	
+
 	//打到紅龜粿
 	private void hitReadCake() {
 		System.out.println("打到紅龜粿");
 		mScoreBar.addScore(mConfig.getRedScore());
 		//TODO 加分、變換別的粿，時間重算
 	}
-	
+
 	//打到草阿粿
 	private void hitGreenCake() {
 		System.out.println("打到草阿粿");
 		mScoreBar.addScore(mConfig.getGreenScore());
 		//TODO 加分、變換別的粿，時間重算
 	}
-	
+
 	//打到壽桃
 	private void hitWhiteCake() {
 		System.out.println("打到壽桃");
 		mScoreBar.addScore(mConfig.getWhiteScore());
 		//TODO 加分、變換別的粿，時間重算
 	}
+
+	//打到壽桃
+	private void hitFly() {
+		System.out.println("打到蒼蠅");
+		//TODO ???
+	}
 	
+	private void hitMiss(){
+		System.out.println("給錯工具");
+		//TODO 給錯工具也會減一顆愛心
+		mLifeBar.addCount(-1);
+	}
+
 	//初始化跟著滑鼠鼠標移動的工具
-	private void initCurrentTool() {
+	private void initCurrentTool(Config config) {
 		mMouseDragTool = new MouseDragTool();
 		mMouseDragTool.setEnableCenter(true);
 		mMouseDragTool.setW(50);
 		mMouseDragTool.setH(50);
-		
+
 		mGameCanvas.addRole(mMouseDragTool);
 	}
 
@@ -158,42 +182,39 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	private void initScoreBar(Config config){
 		mScoreBar = new Score();
 		mScoreBar.setColor(Color.BLACK);
-		mScoreBar.setX(300);
 		mScoreBar.setY(22);
 		mScoreBar.setW(100);
 		mScoreBar.setH(30);
+		mScoreBar.setX(config.getScreenWidth() - mScoreBar.getW());
 		mGameCanvas.addRole(mScoreBar);
 	}
 
 	//初始化4個按鈕(切換工具)
 	private void initTools(Config config){
-		//範例按鈕-----begin-----
-		//壽模模具
-		WhitePeach whitePeach = new WhitePeach();
-		whitePeach.setColor(Color.WHITE);
-		whitePeach.setX(50);
-		whitePeach.setY(200);
-		whitePeach.setW(50);
-		whitePeach.setH(50);
-		whitePeach.setOnClickListener(() -> {
-			// TODO 切換成壽桃模具
-			System.out.println("切換成壽桃模具");
-			mMouseDragTool.setColor(Color.WHITE);
-			mMouseDragTool.setCakeType(CakeType.WHITE);
+		int baseX = config.getScreenWidth()/2 - 200;
+		int paddingX = 125;
+		//粿印
+		CakeMark cakeMark = new CakeMark();
+		cakeMark.setColor(Color.RED);
+		cakeMark.setX(baseX + (paddingX * 0));
+		cakeMark.setY(config.getScreenHeight() - 100);
+		cakeMark.setW(50);
+		cakeMark.setH(50);
+		cakeMark.setOnClickListener(() -> {
+			// TODO 切換成粿印
+			System.out.println("切換粿印");
+			mMouseDragTool.setColor(Color.RED);
+			mMouseDragTool.setCakeType(CakeType.RED);
 		});
 
-		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
-		mClickableRole.add(whitePeach);
-		mGameCanvas.addRole(whitePeach);
-		//範例按鈕-----end-----
+		mClickableRole.add(cakeMark);
+		mGameCanvas.addRole(cakeMark);
 
-
-		//範例按鈕2-----begin-----
-		//草阿粿模具
+		//草阿粿點紅點
 		ReadDot readDot = new ReadDot();
 		readDot.setColor(Color.GREEN);
-		readDot.setX(150);
-		readDot.setY(200);
+		readDot.setX(baseX + (paddingX * 1));
+		readDot.setY(config.getScreenHeight() - 100);
 		readDot.setW(50);
 		readDot.setH(50);
 		readDot.setOnClickListener(()->{
@@ -207,9 +228,44 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
 		mClickableRole.add(readDot);
 		mGameCanvas.addRole(readDot);
-		//範例按鈕-----end-----
 
-		//TODO 將其他2個按鈕照上面範例實作
+
+		//壽模模具
+		WhitePeach whitePeach = new WhitePeach();
+		whitePeach.setColor(Color.WHITE);
+		whitePeach.setX(baseX + (paddingX * 2));
+		whitePeach.setY(config.getScreenHeight() - 100);
+		whitePeach.setW(50);
+		whitePeach.setH(50);
+		whitePeach.setOnClickListener(() -> {
+			// TODO 切換成壽桃模具
+			System.out.println("切換成壽桃模具");
+			mMouseDragTool.setColor(Color.WHITE);
+			mMouseDragTool.setCakeType(CakeType.WHITE);
+		});
+
+		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
+		mClickableRole.add(whitePeach);
+		mGameCanvas.addRole(whitePeach);
+
+
+		//蒼蠅拍
+		Flyswatter flyswatter = new Flyswatter();
+		flyswatter.setColor(Color.BLACK);
+		flyswatter.setX(baseX + (paddingX * 3));
+		flyswatter.setY(config.getScreenHeight() - 100);
+		flyswatter.setW(50);
+		flyswatter.setH(50);
+		flyswatter.setOnClickListener(() -> {
+			// TODO 切換成蒼蠅拍
+			System.out.println("切換蒼蠅拍");
+			mMouseDragTool.setColor(Color.BLACK);
+			mMouseDragTool.setCakeType(CakeType.FLY);
+		});
+
+		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
+		mClickableRole.add(flyswatter);
+		mGameCanvas.addRole(flyswatter);
 	}
 
 	//初始化時間條面板
@@ -226,6 +282,18 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mGameCanvas.addRole(mTimeBar);
 	}
 	
+	private void initLifeBar(Config config){
+		mLifeBar = new LifeBar();
+		mLifeBar.setColor(Color.RED);
+		mLifeBar.setX(config.getScreenWidth() - 100);
+		mLifeBar.setY(25);
+		mLifeBar.setW(200);
+		mLifeBar.setH(20);
+		mLifeBar.setCount(config.getLifeDefault());
+		mGameCanvas.addRole(mLifeBar);
+	}
+	
+
 	//隨機亂數改變畫面中央的粿
 	private void randomChangeCake() {
 		//隨機選一種粿出現，-1是不讓蒼蠅出現(workaround做法…)
