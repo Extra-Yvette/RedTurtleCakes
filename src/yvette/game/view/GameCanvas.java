@@ -3,7 +3,6 @@ package yvette.game.view;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
