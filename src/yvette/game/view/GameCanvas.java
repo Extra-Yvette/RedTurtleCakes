@@ -3,9 +3,12 @@ package yvette.game.view;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.swing.SwingUtilities;
 
 import yvette.game.model.Role;
 
@@ -21,6 +24,8 @@ public class GameCanvas extends Canvas implements Runnable {
 	private boolean mIsPause;
 	private int mFps; // 每秒要畫幾次
 	private List<Role> mRoles;
+	private Image mImageBuffer;
+	private Graphics mCanvasBuffer;
 
 	public GameCanvas() {
 		mIsRun = false;
@@ -92,11 +97,15 @@ public class GameCanvas extends Canvas implements Runnable {
 	 */
 	@Override
 	public void update(Graphics g) {
-		Image img = createImage(getWidth(), getHeight());
-		Graphics canvas = img.getGraphics();
-		onDraw(canvas);
-
-		g.drawImage(img, 0, 0, this);
+		if(mCanvasBuffer == null) {
+			Image img = createImage(getWidth(), getHeight());
+			mCanvasBuffer = img.getGraphics();
+			mImageBuffer = img;
+		}else {
+			mCanvasBuffer.clearRect(0, 0, getWidth(), getHeight());
+		}
+		onDraw(mCanvasBuffer);
+		g.drawImage(mImageBuffer, 0, 0, this);
 	}
 
 	@Override
@@ -104,7 +113,11 @@ public class GameCanvas extends Canvas implements Runnable {
 		while (mIsRun) {
 
 			if (!mIsPause) {
-				repaint();// 子類別繼承後需要覆寫paint()或update();
+				try {
+					SwingUtilities.invokeAndWait(()-> repaint());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			int sec = (int) ((10.0 / mFps) * 100);
 
