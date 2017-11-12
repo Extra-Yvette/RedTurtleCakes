@@ -1,6 +1,10 @@
 package yvette.game.model;
 
+import java.awt.Font;
 import java.awt.Graphics;
+
+import yvette.game.Config;
+import yvette.game.control.RedTurtleCakes;
 
 /**
  * 
@@ -13,7 +17,16 @@ public class Score extends Role {
 	@Override
 	public void onDraw(Graphics canvas) {
 		canvas.setColor(getColor());
-		canvas.drawString("總分 : " + mScore, getX(), getY());
+		
+		Font currentFont = canvas.getFont();
+		Font newFont = currentFont.deriveFont(Font.BOLD, 22);
+		
+		//設定新的字型大小
+		canvas.setFont(newFont);
+		
+		canvas.drawString("" + mScore, getX(), getY());
+		
+		canvas.setFont(currentFont);
 	}
 
 	/**

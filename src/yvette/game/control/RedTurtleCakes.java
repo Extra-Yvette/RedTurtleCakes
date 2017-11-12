@@ -183,8 +183,8 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	private void initScoreBar(Config config){
 		mScoreBar = new Score();
 		mScoreBar.setColor(Color.BLACK);
-		mScoreBar.setY(22);
-		mScoreBar.setW(100);
+		mScoreBar.setY(25);
+		mScoreBar.setW(150);
 		mScoreBar.setH(30);
 		mScoreBar.setX(config.getScreenWidth() - mScoreBar.getW());
 		mGameCanvas.addRole(mScoreBar);
