@@ -1,12 +1,18 @@
 package yvette.game.control;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import yvette.game.Config;
 import yvette.game.model.ClickableRole;
@@ -99,7 +105,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mCake.setH(50);
 		mCake.setX(config.getScreenWidth() / 2 - mCake.getW());
 		mCake.setY(config.getScreenHeight() / 2 - mCake.getH());
-
+		
 		mCake.setOnClickListener(() -> {
 			System.out.println("拿著["+mMouseDragTool.getCakeType()+"],場上的粿["+mCake.getCakeType()+"]");
 			//還沒選擇打粿的道具
@@ -162,7 +168,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		System.out.println("打到蒼蠅");
 		//TODO ???
 	}
-	
+
 	private void hitMiss(){
 		System.out.println("給錯工具");
 		//TODO 給錯工具也會減一顆愛心
@@ -201,11 +207,13 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		cakeMark.setY(config.getScreenHeight() - 100);
 		cakeMark.setW(50);
 		cakeMark.setH(50);
+		cakeMark.setImage(loadImage("/images/redTurtleUtil.png", cakeMark.getW(), cakeMark.getH()));
 		cakeMark.setOnClickListener(() -> {
 			// TODO 切換成粿印
 			System.out.println("切換粿印");
 			mMouseDragTool.setColor(Color.RED);
 			mMouseDragTool.setCakeType(CakeType.RED);
+			mMouseDragTool.setImage(loadImage("/images/redTurtleUtil.png", mMouseDragTool.getW(), mMouseDragTool.getH()));
 		});
 
 		mClickableRole.add(cakeMark);
@@ -224,6 +232,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 			mMouseDragTool.setColor(Color.GREEN);
 			//設定滑鼠拖曳的道具用來打草阿粿
 			mMouseDragTool.setCakeType(CakeType.GREEN);
+			mMouseDragTool.setImage(null);
 		});
 
 		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
@@ -243,6 +252,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 			System.out.println("切換成壽桃模具");
 			mMouseDragTool.setColor(Color.WHITE);
 			mMouseDragTool.setCakeType(CakeType.WHITE);
+			mMouseDragTool.setImage(null);
 		});
 
 		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
@@ -262,6 +272,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 			System.out.println("切換蒼蠅拍");
 			mMouseDragTool.setColor(Color.BLACK);
 			mMouseDragTool.setCakeType(CakeType.FLY);
+			mMouseDragTool.setImage(null);
 		});
 
 		//將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
@@ -282,7 +293,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mTimeBar.setOnTimeBarTimeoutListener(this);
 		mGameCanvas.addRole(mTimeBar);
 	}
-	
+
 	private void initLifeBar(Config config){
 		mLifeBar = new LifeBar();
 		mLifeBar.setColor(Color.RED);
@@ -293,13 +304,27 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mLifeBar.setCount(config.getLifeDefault());
 		mGameCanvas.addRole(mLifeBar);
 	}
-	
+
 
 	//隨機亂數改變畫面中央的粿
 	private void randomChangeCake() {
 		//隨機選一種粿出現，-1是不讓蒼蠅出現(workaround做法…)
 		int randValue = mRandom.nextInt(CakeType.values().length - 1);
 		mCake.setCakeType(CakeType.values()[randValue]);
+		
+		switch(mCake.getCakeType()) {
+		case RED:
+			mCake.setImage(loadImage("/images/redTurtleCake.png", mCake.getW(), mCake.getH()));
+			break;
+		case GREEN:
+			//TODO 換成草仔粿圖片
+			mCake.setImage(null);
+			break;
+		case WHITE:
+			//TODO 換成壽桃圖片
+			mCake.setImage(null);
+			break;
+		}
 	}
 
 	/**
@@ -316,6 +341,43 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	 */
 	public GameCanvas getGameCanvas() {
 		return mGameCanvas;
+	}
+
+	/**
+	 * 戴入圖片
+	 * @param path
+	 * @return
+	 */
+	public Image loadImage(String path) {
+		return loadImage(path, null, null);
+	}
+
+	/**
+	 * 戴入縮放後的圖片
+	 * @param path
+	 * @param scaledWidth
+	 * @param scaledHeight
+	 * @return
+	 * @throws IOException
+	 */
+	public Image loadImage(String path, Integer scaledWidth, Integer scaledHeight) {
+		BufferedImage targetImage = null;
+		try {
+			BufferedImage sourceImage = ImageIO.read(getClass().getResource(path));
+			
+			if(scaledWidth != null &&  scaledHeight != null) {
+				targetImage = new BufferedImage(scaledWidth,
+						scaledHeight, sourceImage.getType());
+				Graphics2D g2d = targetImage.createGraphics();
+				g2d.drawImage(sourceImage, 0, 0, scaledWidth, scaledHeight, null);
+				g2d.dispose();
+			}else {
+				targetImage = sourceImage;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return targetImage;
 	}
 
 	//滑鼠拖曳事件(此遊戲用不到)

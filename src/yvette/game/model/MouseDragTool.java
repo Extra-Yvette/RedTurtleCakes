@@ -1,6 +1,8 @@
 package yvette.game.model;
 
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
 
 public class MouseDragTool extends ClickableRole{
 	private CakeType mType;
@@ -14,9 +16,13 @@ public class MouseDragTool extends ClickableRole{
 	}
 	
 	public void onDraw(Graphics canvas) {
-		if(getColor() != null) {
-			canvas.setColor(getColor());
-			canvas.fillArc(getX(), getY(), getW(), getH(), 0, 360);
+		if(getImage() != null) {
+			canvas.drawImage(getImage(), getX(), getY(), null);
+		}else {
+			if(getColor() != null) {
+				canvas.setColor(getColor());
+				canvas.fillArc(getX(), getY(), getW(), getH(), 0, 360);
+			}
 		}
 	}
 }
