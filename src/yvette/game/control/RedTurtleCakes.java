@@ -68,6 +68,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		initLifeBar(config);
 		initReadyStartGame(config);
 
+		mGameCanvas.setFPS(config.getFPS());
 		mGameCanvas.addMouseMotionListener(this);
 		mGameCanvas.addMouseListener(this);
 		mGameCanvas.start();
