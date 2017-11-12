@@ -1,6 +1,5 @@
 package yvette.game.model;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -15,14 +14,14 @@ public class LifeBar extends Role{
 	}
 
 	/**
-	 * 取得總分
+	 * 取得剩餘愛心顆數
 	 */
 	public int getCount() {
 		return mCount;
 	}
 
 	/**
-	 * 設定目前生命個數
+	 * 設定目前愛心顆數
 	 * 
 	 * @param count
 	 */
@@ -31,7 +30,7 @@ public class LifeBar extends Role{
 	}
 
 	/**
-	 * 增加總分，參數生命個數可為負數
+	 * 增加愛心顆數，參數愛心顆數可為負數
 	 * 
 	 * @param count
 	 */
