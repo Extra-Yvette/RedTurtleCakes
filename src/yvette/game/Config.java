@@ -13,6 +13,8 @@ public class Config {
 	private int mWhiteScore = 300;
 	//玩家每次重新開始玩遊戲的愛心個數
 	private int mLifeDefault = 5;
+	//遊戲繪圖每秒繪制張數
+	private int mFPS = 60;
 
 	/**
 	 * 蒼蠅飛行速度
@@ -76,5 +78,13 @@ public class Config {
 	 */
 	public int getLifeDefault(){
 		return mLifeDefault;
+	}
+	
+	/**
+	 * 遊戲繪圖每秒繪制張數
+	 * @return
+	 */
+	public int getFPS() {
+		return mFPS;
 	}
 }

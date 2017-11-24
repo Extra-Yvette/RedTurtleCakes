@@ -5,20 +5,18 @@ import java.awt.Graphics;
 
 /**
  * 
- * 遊戲獲得總分分數面版
+ * 遊戲倒數計時的時間bar
  * 
  */
-public class TimeBar extends Role implements Runnable{
+public class TimeBar extends Role{
 	private int mSecond;
 	private int mMaxSecond;
-	private Thread mTimeCountdown;
 	private OnTimeBarTimeoutListener mOnTimeBarTimeoutListener;
+	private long mSpendTime;
 	private boolean mIsPause;
 	
 	public TimeBar(){
 		mIsPause = true;
-		mTimeCountdown = new Thread(TimeBar.this);
-		mTimeCountdown.start();
 	}
 	
 	public void pause() {
@@ -26,10 +24,8 @@ public class TimeBar extends Role implements Runnable{
 	}
 	
 	public void resume() {
+		mSpendTime = System.currentTimeMillis();
 		mIsPause = false;
-		synchronized(this) {
-			notifyAll();
-		}
 	}
 	
 	public void setOnTimeBarTimeoutListener(OnTimeBarTimeoutListener listener){
@@ -38,6 +34,10 @@ public class TimeBar extends Role implements Runnable{
 
 	@Override
 	public void onDraw(Graphics canvas) {
+		if(mIsPause) {
+			return;
+		}
+		
 		canvas.setColor(Color.BLACK);
 		
 		canvas.drawRect(getX() - 1, getY() - 1, getW() + 1, getH() + 1);
@@ -46,6 +46,8 @@ public class TimeBar extends Role implements Runnable{
 		
 		canvas.setColor(getColor());
 		canvas.fillRect(getX(), getY(), (int)(getW() * percent), getH());
+		
+		countdownTimer();
 	}
 
 	/**
@@ -82,24 +84,17 @@ public class TimeBar extends Role implements Runnable{
 		mSecond += (second * 1000);
 	}
 
-	@Override
-	public void run() {
-		while(isALive()){
-			if(mIsPause) {
-				synchronized(this) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+	//倒數計數
+	private void countdownTimer() {
+		if(isALive()){
+			long time = 0L;
+			long current = System.currentTimeMillis();
+			
+			if(mSpendTime != current) {
+				time = current - mSpendTime;
+				mSpendTime = current;
 			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			mSecond -= 10;
+			mSecond -= time;
 			
 			if(mSecond < 0){
 				mSecond = mMaxSecond;
