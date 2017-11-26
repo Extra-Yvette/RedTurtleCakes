@@ -1,5 +1,12 @@
 package yvette.game;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class Config {
 	private int mFlySpeed;
 	private int mCakeChangeTime = 5;
@@ -86,5 +93,43 @@ public class Config {
 	 */
 	public int getFPS() {
 		return mFPS;
+	}
+	
+
+	/**
+	 * 戴入圖片
+	 * @param path
+	 * @return
+	 */
+	public Image loadImage(String path) {
+		return loadImage(path, null, null);
+	}
+
+	/**
+	 * 戴入縮放後的圖片
+	 * @param path
+	 * @param scaledWidth
+	 * @param scaledHeight
+	 * @return
+	 * @throws IOException
+	 */
+	public Image loadImage(String path, Integer scaledWidth, Integer scaledHeight) {
+		BufferedImage targetImage = null;
+		try {
+			BufferedImage sourceImage = ImageIO.read(getClass().getResource(path));
+			
+			if(scaledWidth != null &&  scaledHeight != null) {
+				targetImage = new BufferedImage(scaledWidth,
+						scaledHeight, sourceImage.getType());
+				Graphics2D g2d = targetImage.createGraphics();
+				g2d.drawImage(sourceImage, 0, 0, scaledWidth, scaledHeight, null);
+				g2d.dispose();
+			}else {
+				targetImage = sourceImage;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return targetImage;
 	}
 }

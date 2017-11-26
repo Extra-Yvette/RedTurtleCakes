@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import yvette.game.model.Role;
+import yvette.game.model.Scenes;
 
 /**
  * 繪圖
@@ -22,7 +23,7 @@ public class GameCanvas extends Canvas implements Runnable {
 	private boolean mIsRun;
 	private boolean mIsPause;
 	private int mFps; // 每秒要畫幾次
-	private List<Role> mRoles;
+	private List<Scenes> mScenes;
 	private Image mImageBuffer;
 	private Graphics mCanvasBuffer;
 
@@ -30,7 +31,7 @@ public class GameCanvas extends Canvas implements Runnable {
 		mIsRun = false;
 		mIsPause = false;
 		mFps = 30;
-		mRoles = Collections.synchronizedList(new ArrayList<Role>());
+		mScenes = Collections.synchronizedList(new ArrayList<Scenes>());
 	}
 
 	/**
@@ -130,25 +131,8 @@ public class GameCanvas extends Canvas implements Runnable {
 
 	private void onDraw(Graphics canvas) {
 		// 繪制全部場景上的角色
-		for (Role obj : mRoles) {
+		for (Role obj : mScenes) {
 			obj.onDraw(canvas);
 		}
-		
-		for (int i = mRoles.size() - 1; i >= 0; i--) {
-			Role obj = mRoles.get(i);
-			// 若場景上角色已不存活，將它移除
-			if (!obj.isALive()) {
-				mRoles.remove(obj);
-			}
-		}
-	}
-
-	/**
-	 * 將角色加到場景上
-	 * 
-	 * @param role
-	 */
-	public void addRole(Role role) {
-		mRoles.add(role);
 	}
 }
