@@ -101,8 +101,8 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	//初始化畫面上的粿
 	private void initCake(Config config) {
 		mCake = new Cake();
-		mCake.setW(50);
-		mCake.setH(50);
+		mCake.setW(100);
+		mCake.setH(100);
 		mCake.setX(config.getScreenWidth() / 2 - mCake.getW());
 		mCake.setY(config.getScreenHeight() / 2 - mCake.getH());
 		
@@ -318,11 +318,11 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 			break;
 		case GREEN:
 			//TODO 換成草仔粿圖片
-			mCake.setImage(null);
+			mCake.setImage(loadImage("/images/caozaiguo.png", mCake.getW(), mCake.getH()));
 			break;
 		case WHITE:
 			//TODO 換成壽桃圖片
-			mCake.setImage(null);
+			mCake.setImage(loadImage("/images/peach.png", mCake.getW(), mCake.getH()));
 			break;
 		}
 	}
