@@ -75,6 +75,10 @@ public class Scenes extends Role{
 		mRoles.remove(role);
 	}
 	
+	public void clearRoles() {
+		mRoles.clear();
+	}
+	
 	public List<Role> getRoles(){
 		return mRoles;
 	}

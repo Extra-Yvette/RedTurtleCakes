@@ -4,6 +4,11 @@ import java.awt.Color;
 
 import yvette.game.Config;
 
+/**
+ * 
+ * 遊戲開始畫面
+ *
+ */
 public class ScenesReadyStart extends Scenes{
 	private Config mConfig;
 

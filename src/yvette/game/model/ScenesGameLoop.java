@@ -5,6 +5,11 @@ import java.util.Random;
 
 import yvette.game.Config;
 
+/**
+ * 
+ * 遊戲進行中畫面
+ *
+ */
 public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 	private Config mConfig;
 
@@ -24,6 +29,20 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 	public ScenesGameLoop(Config config) {
 		super();
 		mConfig = config;
+	}
+	
+	@Override
+	public void onLoad() {
+		initialize(mConfig);
+		mTimeBar.resume();
+	}
+	
+	@Override
+	public void onUnload() {
+		clearRoles();
+	}
+	
+	private void initialize(Config config){
 		initTools(config);
 		initCake(config);
 		initCurrentTool(config);
@@ -108,6 +127,11 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 		System.out.println("給錯工具");
 		//TODO 給錯工具也會減一顆愛心
 		mLifeBar.addCount(-1);
+		
+		//TODO 判斷愛心扣完，切換畫面到遊戲結束
+		if(mLifeBar.getCount() <= 0) {
+			changeScenes(mConfig.getScenesGameOver());
+		}
 	}
 
 	//初始化跟著滑鼠鼠標移動的工具
@@ -236,11 +260,6 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 		mLifeBar.setH(20);
 		mLifeBar.setCount(config.getLifeDefault());
 		addRole(mLifeBar);
-	}
-
-	@Override
-	public void onLoad() {
-		mTimeBar.resume();
 	}
 
 	//時間條倒數完時，時間到事件

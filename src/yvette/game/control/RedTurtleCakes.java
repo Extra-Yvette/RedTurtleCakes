@@ -37,7 +37,7 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnCha
 		//建立3個遊戲場景
 		ScenesReadyStart readyStart = new ScenesReadyStart(mConfig);
 		ScenesGameLoop gameLoop = new ScenesGameLoop(mConfig);
-		ScenesGameOver gameOver = new ScenesGameOver();
+		ScenesGameOver gameOver = new ScenesGameOver(mConfig);
 
 		//將全部遊戲場景緩存要重複使用
 		mScenes.put(config.getScenesReadyStartName(), readyStart);
