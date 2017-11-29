@@ -38,6 +38,7 @@ public class LifeBar extends Role{
 		mCount += count;
 	}
 	
+	@Override
 	public void onDraw(Graphics canvas) {
 		Font currentFont = canvas.getFont();
 		Config config = RedTurtleCakes.getInstance().getConfig();

@@ -79,6 +79,7 @@ public class Scenes extends Role{
 		return mRoles;
 	}
 
+	@Override
 	public void onDraw(Graphics canvas) {
 		// 繪制全部場景上的角色
 		for (Role obj : mRoles) {

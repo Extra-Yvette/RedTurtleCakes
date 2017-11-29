@@ -1,41 +1,17 @@
 package yvette.game.control;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.imageio.ImageIO;
-
 import yvette.game.Config;
-import yvette.game.model.ClickableRole;
-import yvette.game.model.Flyswatter;
-import yvette.game.model.LifeBar;
-import yvette.game.model.MouseDragTool;
 import yvette.game.model.OnChangeScenesListener;
-import yvette.game.model.Cake;
-import yvette.game.model.CakeMark;
-import yvette.game.model.CakeType;
-import yvette.game.model.OnTimeBarTimeoutListener;
-import yvette.game.model.ReadDot;
-import yvette.game.model.ReadyStartGame;
-import yvette.game.model.Role;
 import yvette.game.model.Scenes;
 import yvette.game.model.ScenesGameLoop;
 import yvette.game.model.ScenesGameOver;
 import yvette.game.model.ScenesReadyStart;
-import yvette.game.model.Score;
-import yvette.game.model.TimeBar;
-import yvette.game.model.WhitePeach;
 import yvette.game.view.GameCanvas;
 
 public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnChangeScenesListener {

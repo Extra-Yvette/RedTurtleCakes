@@ -13,6 +13,7 @@ public class ReadyStartGame extends ClickableRole{
 	private Font mTitleFont;
 	private Font mPressStartFont;
 	
+	@Override
 	public void onDraw(Graphics canvas) {
 		canvas.setColor(getColor());
 		canvas.fillRect(getX(), getY(), getW(), getH());

@@ -3,8 +3,6 @@ package yvette.game.model;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
 
 public class Cake extends ClickableRole {
 	private CakeType mType;
@@ -17,6 +15,7 @@ public class Cake extends ClickableRole {
 		return mType;
 	}
 	
+	@Override
 	public void onDraw(Graphics canvas) {
 		if(getImage() != null) {
 			canvas.drawImage(getImage(), getX(), getY(), null);

@@ -3,9 +3,6 @@ package yvette.game.model;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import yvette.game.Config;
-import yvette.game.control.RedTurtleCakes;
-
 /**
  * 
  * 遊戲獲得總分分數面版

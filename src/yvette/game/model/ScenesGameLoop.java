@@ -1,8 +1,6 @@
 package yvette.game.model;
 
 import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.util.List;
 import java.util.Random;
 
 import yvette.game.Config;
