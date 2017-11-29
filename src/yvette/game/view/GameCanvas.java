@@ -23,7 +23,7 @@ public class GameCanvas extends Canvas implements Runnable {
 	private boolean mIsRun;
 	private boolean mIsPause;
 	private int mFps; // 每秒要畫幾次
-	private List<Scenes> mScenes;
+	private Scenes mScenes;
 	private Image mImageBuffer;
 	private Graphics mCanvasBuffer;
 
@@ -31,7 +31,6 @@ public class GameCanvas extends Canvas implements Runnable {
 		mIsRun = false;
 		mIsPause = false;
 		mFps = 30;
-		mScenes = Collections.synchronizedList(new ArrayList<Scenes>());
 	}
 
 	/**
@@ -131,8 +130,24 @@ public class GameCanvas extends Canvas implements Runnable {
 
 	private void onDraw(Graphics canvas) {
 		// 繪制全部場景上的角色
-		for (Role obj : mScenes) {
-			obj.onDraw(canvas);
+		if(mScenes != null) {
+			mScenes.onDraw(canvas);
 		}
+	}
+	
+	/**
+	 * 設定目前要顯示在畫面上的場景
+	 * @param scenes
+	 */
+	public void setScenes(Scenes scenes) {
+		mScenes = scenes;
+	}
+	
+	/**
+	 * 取得目前顯示在畫面上的場景
+	 * @return
+	 */
+	public Scenes getScenes() {
+		return mScenes;
 	}
 }

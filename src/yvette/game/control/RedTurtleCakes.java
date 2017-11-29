@@ -10,7 +10,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.ImageIO;
 
@@ -19,23 +21,31 @@ import yvette.game.model.ClickableRole;
 import yvette.game.model.Flyswatter;
 import yvette.game.model.LifeBar;
 import yvette.game.model.MouseDragTool;
+import yvette.game.model.OnChangeScenesListener;
 import yvette.game.model.Cake;
 import yvette.game.model.CakeMark;
 import yvette.game.model.CakeType;
 import yvette.game.model.OnTimeBarTimeoutListener;
 import yvette.game.model.ReadDot;
 import yvette.game.model.ReadyStartGame;
+import yvette.game.model.Role;
+import yvette.game.model.Scenes;
+import yvette.game.model.ScenesGameLoop;
+import yvette.game.model.ScenesGameOver;
+import yvette.game.model.ScenesReadyStart;
 import yvette.game.model.Score;
 import yvette.game.model.TimeBar;
 import yvette.game.model.WhitePeach;
 import yvette.game.view.GameCanvas;
 
-public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTimeBarTimeoutListener {
+public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnChangeScenesListener {
 	private static RedTurtleCakes sInstance = new RedTurtleCakes();
 	//遊戲場景畫布
 	private GameCanvas mGameCanvas;
 	//設定檔
 	private Config mConfig;
+	//存放3個遊戲場景(遊戲開始畫面、遊戲進行中、遊戲結束)
+	private Map<String, Scenes> mScenes;
 
 	private RedTurtleCakes(){
 	}
@@ -46,10 +56,27 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 
 	public void initialize(Config config) {
 		mConfig = config;
+
+		mScenes = new ConcurrentHashMap<>();
+		//建立3個遊戲場景
+		ScenesReadyStart readyStart = new ScenesReadyStart(mConfig);
+		ScenesGameLoop gameLoop = new ScenesGameLoop(mConfig);
+		ScenesGameOver gameOver = new ScenesGameOver();
+
+		//將全部遊戲場景緩存要重複使用
+		mScenes.put(config.getScenesReadyStartName(), readyStart);
+		mScenes.put(config.getScenesGameLoop(), gameLoop);
+		mScenes.put(config.getScenesGameOver(), gameOver);
+
+		//註冊遊戲場景切換時，要將景場事件發送class RedTurtleCakes接收，會呼叫void onChangeScenes(String scenesName)
+		readyStart.setOnChangeScenesListener(this);
+		gameLoop.setOnChangeScenesListener(this);
+		gameOver.setOnChangeScenesListener(this);
+
 		// 建立遊戲繪布
 		mGameCanvas = new GameCanvas();
-		
-		initReadyStartGame(config);
+
+		mGameCanvas.setScenes(readyStart);
 
 		mGameCanvas.setFPS(config.getFPS());
 		mGameCanvas.addMouseMotionListener(this);
@@ -57,22 +84,17 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 		mGameCanvas.start();
 	}
 
-	//初始化首頁顯示請用滑鼠點擊畫面開始遊戲
-	private void initReadyStartGame(Config config) {
-		mReadyStartGame = new ReadyStartGame();
-		mReadyStartGame.setColor(Color.WHITE);
-		mReadyStartGame.setW(config.getScreenWidth());
-		mReadyStartGame.setH(config.getScreenHeight());
-		//在畫面上首頁按下滑鼠觸發事件
-		mReadyStartGame.setOnClickListener(() ->{
-			System.out.println("start game");
-			mReadyStartGame.setIsAlive(false);
-			mClickableRole.remove(mReadyStartGame);
-			//開始進行計時，進行遊戲
-			mTimeBar.resume();
-		});
-		mClickableRole.add(0, mReadyStartGame);
-		mGameCanvas.addRole(mReadyStartGame);
+	//接收到切換景事件
+	@Override
+	public void onChangeScenes(String scenesName) {
+		//目前顯示的場景
+		Scenes currentScenes = mGameCanvas.getScenes();
+		//將要顯示的景場
+		Scenes targetScenes = mScenes.get(scenesName);	
+		targetScenes.onLoad();
+		//換場景
+		mGameCanvas.setScenes(targetScenes);
+		currentScenes.onUnload();
 	}
 
 	/**
@@ -100,30 +122,20 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnTim
 	//滑鼠移動事件
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		mMouseDragTool.setX(e.getX());
-		mMouseDragTool.setY(e.getY());
-	}
+		Scenes scenes = mGameCanvas.getScenes();
 
-	//時間條倒數完時，時間到事件
-	@Override
-	public void onTimeBarTimeout() {
-		//TODO TimeBar,時間到，變換粿
-		System.out.println("TimeBar,時間到，變換粿");
-		randomChangeCake();
+		if(scenes != null) {
+			scenes.mouseMoved(e);
+		}
 	}
 
 	//點擊上3個按鈕時觸發滑鼠事件
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		//滑鼠點了左鍵
-		if(e.getButton() == MouseEvent.BUTTON1){
-			//把畫面上4個按鈕取出來判斷有哪個按鈕與滑鼠碰撞
-			for(ClickableRole tool : mClickableRole){
-				if(tool.hitTest(mMouseDragTool)){
-					tool.onClick();
-					break;
-				}
-			}
+		Scenes scenes = mGameCanvas.getScenes();
+
+		if(scenes != null) {
+			scenes.mouseClicked(e);
 		}
 	}
 

@@ -22,6 +22,11 @@ public class Config {
 	private int mLifeDefault = 5;
 	//遊戲繪圖每秒繪制張數
 	private int mFPS = 60;
+	
+	//開場的景場名稱
+	public String mScenesReadyStart = "ScenesReadyStart";
+	public String mScenesGameLoop = "ScenesGameLoop";
+	public String mScenesGameOver = "ScenesGameOver";
 
 	/**
 	 * 蒼蠅飛行速度
@@ -131,5 +136,17 @@ public class Config {
 			e.printStackTrace();
 		}
 		return targetImage;
+	}
+	
+	public String getScenesReadyStartName() {
+		return mScenesReadyStart;
+	}
+	
+	public String getScenesGameLoop() {
+		return mScenesGameLoop;
+	}
+	
+	public String getScenesGameOver() {
+		return mScenesGameOver;
 	}
 }

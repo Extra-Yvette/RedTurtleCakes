@@ -8,7 +8,7 @@ import java.awt.Image;
  * 場景上的角色
  * 
  */
-public abstract class Role {
+public class Role {
 	// 顯示出來的範圍
 	private int mX;
 	private int mY;
