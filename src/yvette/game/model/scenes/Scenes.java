@@ -1,10 +1,13 @@
-package yvette.game.model;
+package yvette.game.model.scenes;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import yvette.game.model.ClickableRole;
+import yvette.game.model.Role;
 
 /**
  * 遊戲場景

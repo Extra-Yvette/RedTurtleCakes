@@ -1,4 +1,4 @@
-package yvette.game.model;
+package yvette.game.model.scenes;
 
 /**
  * 

@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import yvette.game.Config;
-import yvette.game.model.OnChangeScenesListener;
-import yvette.game.model.Scenes;
-import yvette.game.model.ScenesGameLoop;
-import yvette.game.model.ScenesGameOver;
-import yvette.game.model.ScenesReadyStart;
+import yvette.game.model.scenes.OnChangeScenesListener;
+import yvette.game.model.scenes.Scenes;
+import yvette.game.model.scenes.ScenesGameLoop;
+import yvette.game.model.scenes.ScenesGameOver;
+import yvette.game.model.scenes.ScenesReadyStart;
 import yvette.game.view.GameCanvas;
 
 /**

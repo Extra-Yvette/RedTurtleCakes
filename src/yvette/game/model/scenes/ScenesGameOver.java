@@ -1,8 +1,9 @@
-package yvette.game.model;
+package yvette.game.model.scenes;
 
 import java.awt.Color;
 
 import yvette.game.Config;
+import yvette.game.model.GameOverTitle;
 
 /**
  * 

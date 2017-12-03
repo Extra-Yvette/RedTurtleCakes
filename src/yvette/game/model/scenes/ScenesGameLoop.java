@@ -1,9 +1,20 @@
-package yvette.game.model;
+package yvette.game.model.scenes;
 
 import java.awt.Color;
 import java.util.Random;
 
 import yvette.game.Config;
+import yvette.game.model.Cake;
+import yvette.game.model.CakeMark;
+import yvette.game.model.CakeType;
+import yvette.game.model.Flyswatter;
+import yvette.game.model.LifeBar;
+import yvette.game.model.MouseDragTool;
+import yvette.game.model.OnTimeBarTimeoutListener;
+import yvette.game.model.ReadDot;
+import yvette.game.model.Score;
+import yvette.game.model.TimeBar;
+import yvette.game.model.WhitePeach;
 
 /**
  * 

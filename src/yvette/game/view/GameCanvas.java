@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.SwingUtilities;
 
-import yvette.game.model.Scenes;
+import yvette.game.model.scenes.Scenes;
 
 /**
  * 繪圖
