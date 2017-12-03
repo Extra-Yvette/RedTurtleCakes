@@ -4,6 +4,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
 
+/**
+ * 紅龜粿模具
+ * 
+ * @author yvette
+ *
+ */
 public class CakeMark extends ClickableRole{
 
 	@Override

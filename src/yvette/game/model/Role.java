@@ -5,10 +5,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 /**
- * 場景上的角色
+ * 場景上的全部角色都要繼承的class
+ * 
+ * @author yvette
  * 
  */
-public abstract class Role {
+public class Role {
 	// 顯示出來的範圍
 	private int mX;
 	private int mY;
