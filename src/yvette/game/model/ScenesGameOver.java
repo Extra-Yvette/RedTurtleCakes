@@ -7,6 +7,8 @@ import yvette.game.Config;
 /**
  * 
  * 遊戲結束畫面
+ * 
+ * @author yvette
  *
  */
 public class ScenesGameOver extends Scenes{

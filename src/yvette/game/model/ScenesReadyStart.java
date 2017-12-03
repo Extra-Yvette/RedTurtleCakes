@@ -7,6 +7,8 @@ import yvette.game.Config;
 /**
  * 
  * 遊戲開始畫面
+ * 
+ * @author yvette
  *
  */
 public class ScenesReadyStart extends Scenes{

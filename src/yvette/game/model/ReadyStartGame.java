@@ -7,6 +7,13 @@ import java.awt.Graphics;
 import yvette.game.Config;
 import yvette.game.control.RedTurtleCakes;
 
+/**
+ * 
+ * 遊戲準備開始場景上面的"請用滑鼠點擊畫面後開始遊戲"字
+ * 
+ * @author yvette
+ *
+ */
 public class ReadyStartGame extends ClickableRole{
 	private int mColorAlpha = 0;
 	private int mAlphaFlag = 8;

@@ -10,6 +10,8 @@ import yvette.game.control.RedTurtleCakes;
 /**
  * 
  * 遊戲結束畫面上的字串
+ * 
+ * @author yvette
  *
  */
 public class GameOverTitle extends ClickableRole{

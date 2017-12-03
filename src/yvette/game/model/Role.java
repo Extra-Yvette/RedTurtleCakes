@@ -5,7 +5,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 /**
- * 場景上的角色
+ * 場景上的全部角色都要繼承的class
+ * 
+ * @author yvette
  * 
  */
 public class Role {

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 遊戲場景
- * @author Ray Lee
+ * @author yvette
  *
  */
 public class Scenes extends Role{

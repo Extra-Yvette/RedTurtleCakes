@@ -14,6 +14,13 @@ import yvette.game.model.ScenesGameOver;
 import yvette.game.model.ScenesReadyStart;
 import yvette.game.view.GameCanvas;
 
+/**
+ * 遊戲分為MVC三個部份，class
+ * RedTurtleCakes為Control，管理場景(model)切換，並將場景通知GameCanvas場景畫布繪圖(view)進行顯示
+ * 
+ * @author yvette
+ *
+ */
 public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnChangeScenesListener {
 	private static RedTurtleCakes sInstance = new RedTurtleCakes();
 	//遊戲場景畫布
@@ -30,6 +37,10 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnCha
 		return sInstance;
 	}
 
+	/**
+	 * 初始遊戲
+	 * @param config
+	 */
 	public void initialize(Config config) {
 		mConfig = config;
 
@@ -115,18 +126,22 @@ public class RedTurtleCakes implements MouseMotionListener, MouseListener, OnCha
 		}
 	}
 
+	//按住滑鼠任一按鍵
 	@Override
 	public void mousePressed(MouseEvent e) {
 	}
 
+	//放開滑鼠任一按鍵
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
 
+	//滑鼠滑進遊戲視窗內
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
+	//滑鼠滑出遊戲視窗外
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}

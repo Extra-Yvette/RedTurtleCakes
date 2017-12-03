@@ -7,11 +7,22 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * 遊戲設定檔
+ * 
+ * @author yvette
+ *
+ */
 public class Config {
-	private int mFlySpeed;
-	private int mCakeChangeTime = 5;
+	//遊戲視窗大小-寬
 	private int mScreenWidth = 720;
+	//遊戲視窗大小-高
 	private int mScreenHeight = 480;
+	//蒼蠅飛行速度
+	private int mFlySpeed = 1;
+	//遊戲中時，畫面正中間的粿間隔多久會變換
+	private int mCakeChangeTime = 5;
 	//敲紅龜粿可獲得分數
 	private int mRedScore = 100;
 	//敲草阿粿可獲得分數
@@ -24,8 +35,11 @@ public class Config {
 	private int mFPS = 60;
 	
 	//開場的景場名稱
+	//準備開始遊戲
 	public String mScenesReadyStart = "ScenesReadyStart";
+	//遊戲進行中
 	public String mScenesGameLoop = "ScenesGameLoop";
+	//遊戲結束
 	public String mScenesGameOver = "ScenesGameOver";
 
 	/**
@@ -138,14 +152,26 @@ public class Config {
 		return targetImage;
 	}
 	
+	/**
+	 * 取得準備開始遊戲的場景名稱"ScenesReadyStart"
+	 * @return
+	 */
 	public String getScenesReadyStartName() {
 		return mScenesReadyStart;
 	}
 	
+	/**
+	 * 取得遊戲進行中的場景名稱"ScenesGameLoop"
+	 * @return
+	 */
 	public String getScenesGameLoop() {
 		return mScenesGameLoop;
 	}
 	
+	/**
+	 * 取得遊戲結束的場景名稱"ScenesGameOver"
+	 * @return
+	 */
 	public String getScenesGameOver() {
 		return mScenesGameOver;
 	}

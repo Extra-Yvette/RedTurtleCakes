@@ -8,6 +8,8 @@ import yvette.game.Config;
 /**
  * 
  * 遊戲進行中畫面
+ * 
+ * @author yvette
  *
  */
 public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{

@@ -1,5 +1,12 @@
 package yvette.game.model;
 
+/**
+ * 
+ * 場景切換事件
+ * 
+ * @author yvette
+ *
+ */
 public interface OnChangeScenesListener {
 	/**
 	 * 當有場景切換事件時

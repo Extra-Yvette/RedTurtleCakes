@@ -7,8 +7,11 @@ import java.awt.Graphics;
  * 
  * 遊戲獲得總分分數面版
  * 
+ * @author yvette
+ * 
  */
 public class Score extends Role {
+	//遊戲分數
 	private int mScore;
 
 	@Override

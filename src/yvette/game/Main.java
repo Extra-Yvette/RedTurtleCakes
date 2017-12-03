@@ -8,6 +8,12 @@ import javax.swing.JFrame;
 
 import yvette.game.control.RedTurtleCakes;
 
+/**
+ * 遊戲執行的進入點
+ * 
+ * @author yvette
+ *
+ */
 public class Main {
 	public static void main(String[] args) {
 		Toolkit tk = Toolkit.getDefaultToolkit();
