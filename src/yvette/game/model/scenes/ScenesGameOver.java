@@ -13,7 +13,6 @@ import yvette.game.model.GameOverTitle;
  *
  */
 public class ScenesGameOver extends Scenes{
-	private Config mConfig;
 
 	//遊戲結束，等待玩家按下滑鼠
 	private GameOverTitle mGameOverTitle;

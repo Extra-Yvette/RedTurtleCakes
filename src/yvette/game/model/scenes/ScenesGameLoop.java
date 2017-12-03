@@ -24,7 +24,6 @@ import yvette.game.model.WhitePeach;
  *
  */
 public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
-	private Config mConfig;
 
 	//時間bar
 	private TimeBar mTimeBar;

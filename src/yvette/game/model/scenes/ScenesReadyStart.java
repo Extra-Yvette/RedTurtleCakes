@@ -13,7 +13,6 @@ import yvette.game.model.ReadyStartGame;
  *
  */
 public class ScenesReadyStart extends Scenes{
-	private Config mConfig;
 
 	//開場的畫面，等待玩家按下滑鼠
 	private ReadyStartGame mReadyStartGame;

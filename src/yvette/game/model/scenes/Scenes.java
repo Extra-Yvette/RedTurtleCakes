@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import yvette.game.Config;
 import yvette.game.model.ClickableRole;
 import yvette.game.model.Role;
 
@@ -15,6 +16,7 @@ import yvette.game.model.Role;
  *
  */
 public class Scenes extends Role{
+	protected Config mConfig;
 	private List<Role> mRoles;
 	private Role mMouse;
 	private OnChangeScenesListener mOnChangeScenesListener;
