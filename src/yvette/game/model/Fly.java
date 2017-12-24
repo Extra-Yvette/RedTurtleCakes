@@ -28,7 +28,7 @@ public class Fly  extends ClickableRole{
 //			x=50;
 //		}
 		System.out.println("Fly"+x);
-		setX(Math.abs(x));
+		setX(x);
 		
 		super.onDraw(canvas);
 		

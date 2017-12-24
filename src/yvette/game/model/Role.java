@@ -69,11 +69,19 @@ public class Role {
 	}
 
 	public void setX(int x) {
-		mX = x;
+		if(mEnableCenter) {
+			mX = x + (mW / 2);
+		}else {
+			mX = x;
+		}
 	}
 
 	public void setY(int y) {
-		mY = y;
+		if(mEnableCenter) {
+			mY = y + (mH / 2);
+		}else {
+			mY = y;
+		}
 	}
 
 	public void setW(int w) {
