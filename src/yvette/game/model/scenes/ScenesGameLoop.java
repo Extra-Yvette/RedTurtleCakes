@@ -7,6 +7,7 @@ import yvette.game.Config;
 import yvette.game.model.Cake;
 import yvette.game.model.CakeMark;
 import yvette.game.model.CakeType;
+import yvette.game.model.Fly;
 import yvette.game.model.Flyswatter;
 import yvette.game.model.LifeBar;
 import yvette.game.model.MouseDragTool;
@@ -37,6 +38,8 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 	private MouseDragTool mMouseDragTool;
 	//用來產生隨機亂數的物件
 	private Random mRandom;
+	//蒼蠅出現
+	private Fly mFly;
 	
 	public ScenesGameLoop(Config config) {
 		super();
@@ -61,8 +64,22 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 		initScoreBar(config);
 		initTimeBar(config);
 		initLifeBar(config);
+		initFly(config);
+				
 	}
 
+
+	private void initFly(Config config) {
+		//建立蒼蠅在場景上
+		mFly = new Fly();
+		mFly.setEnableCenter(true);
+		mFly.setW(50);
+		mFly.setH(50);
+		mFly.setX(10);
+		mFly.setY(mCake.getY()+(mCake.getH()/2));
+		mFly.setColor(Color.BLACK);
+		addRole(mFly);
+	}
 
 	//初始化畫面上的粿
 	private void initCake(Config config) {
