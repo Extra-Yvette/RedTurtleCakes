@@ -6,8 +6,15 @@ import java.awt.Graphics;
 import yvette.game.Config;
 import yvette.game.control.RedTurtleCakes;
 
+/**
+ * 畫面上顯示愛心個數的bar
+ * 
+ * @author yvette
+ *
+ */
 public class LifeBar extends Role{
-	private int mCount;//生命
+	//愛心個數
+	private int mCount;
 	
 
 	public LifeBar() {
@@ -38,6 +45,7 @@ public class LifeBar extends Role{
 		mCount += count;
 	}
 	
+	@Override
 	public void onDraw(Graphics canvas) {
 		Font currentFont = canvas.getFont();
 		Config config = RedTurtleCakes.getInstance().getConfig();

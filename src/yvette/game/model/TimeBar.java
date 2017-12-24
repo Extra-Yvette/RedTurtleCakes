@@ -7,27 +7,44 @@ import java.awt.Graphics;
  * 
  * 遊戲倒數計時的時間bar
  * 
+ * @author yvette
+ * 
  */
 public class TimeBar extends Role{
+	//目前剩餘秒數
 	private int mSecond;
+	//遊戲最大秒數
 	private int mMaxSecond;
+	//時間到之後要通知的對象
 	private OnTimeBarTimeoutListener mOnTimeBarTimeoutListener;
+	//每次刷新畫面經過時間
 	private long mSpendTime;
+	//是否有暫停
 	private boolean mIsPause;
 	
 	public TimeBar(){
 		mIsPause = true;
 	}
 	
+	/**
+	 * 時間暫停
+	 */
 	public void pause() {
 		mIsPause = true;
 	}
 	
+	/**
+	 * 時間繼續
+	 */
 	public void resume() {
 		mSpendTime = System.currentTimeMillis();
 		mIsPause = false;
 	}
 	
+	/**
+	 * 設定時間到之後，要通知的對象
+	 * @param listener
+	 */
 	public void setOnTimeBarTimeoutListener(OnTimeBarTimeoutListener listener){
 		mOnTimeBarTimeoutListener = listener;
 	}
@@ -38,15 +55,21 @@ public class TimeBar extends Role{
 			return;
 		}
 		
+		//將畫布上的顏色改成黑色
 		canvas.setColor(Color.BLACK);
 		
+		//畫一個空心長方型(黑色框)
 		canvas.drawRect(getX() - 1, getY() - 1, getW() + 1, getH() + 1);
 		
+		//用 剩餘時間 / 最大時間 ，可得到百分比，比如0.87
 		double percent = (double)mSecond / (double)mMaxSecond;
 		
+		//將畫布上的顏色改成指定的顏色
 		canvas.setColor(getColor());
+		//畫一個實心長方型
 		canvas.fillRect(getX(), getY(), (int)(getW() * percent), getH());
 		
+		//將剩餘時間減掉經過時間，若剩餘時間低於0就通知時間到
 		countdownTimer();
 	}
 
@@ -104,6 +127,4 @@ public class TimeBar extends Role{
 			}
 		}
 	}
-	
-	
 }

@@ -2,12 +2,15 @@ package yvette.game.model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
 /**
- * 場景上的角色
+ * 場景上的全部角色都要繼承的class
+ * 
+ * @author yvette
  * 
  */
-public abstract class Role {
+public class Role {
 	// 顯示出來的範圍
 	private int mX;
 	private int mY;
@@ -16,12 +19,13 @@ public abstract class Role {
 	private Color mColor;
 	private boolean mIsAlve;
 	private boolean mEnableCenter;
+	private Image mImage;
 
 	public Role() {
 		mIsAlve = true;
 		mEnableCenter = false;
 	}
-	
+
 	public void setEnableCenter(boolean enable) {
 		mEnableCenter = enable;
 	}
@@ -84,12 +88,20 @@ public abstract class Role {
 		mColor = color;
 	}
 
-	public void setIsAlive(boolean isAlive) {
-		mIsAlve = isAlive;
-	}
-
 	public Color getColor() {
 		return mColor;
+	}
+	
+	public void setImage(Image image) {
+		mImage = image;
+	}
+	
+	public Image getImage() {
+		return mImage;
+	}
+
+	public void setIsAlive(boolean isAlive) {
+		mIsAlve = isAlive;
 	}
 
 	public boolean isALive() {

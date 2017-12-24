@@ -9,12 +9,12 @@ import yvette.game.control.RedTurtleCakes;
 
 /**
  * 
- * 遊戲準備開始場景上面的"請用滑鼠點擊畫面後開始遊戲"字
+ * 遊戲結束畫面上的字串
  * 
  * @author yvette
  *
  */
-public class ReadyStartGame extends ClickableRole{
+public class GameOverTitle extends ClickableRole{
 	private int mColorAlpha = 0;
 	private int mAlphaFlag = 8;
 	private Font mTitleFont;
@@ -29,16 +29,12 @@ public class ReadyStartGame extends ClickableRole{
 		
 		//設定首頁紅龜粿字型大小
 		if (mTitleFont == null) {
-			mTitleFont = currentFont.deriveFont(Font.ITALIC, 72);
+			mTitleFont = currentFont.deriveFont(Font.ITALIC, 54);
 		}
 		canvas.setFont(mTitleFont);
 		
 		canvas.setColor(Color.RED);
-		canvas.drawString("紅", config.getScreenWidth() / 2 - 150, config.getScreenHeight() / 2 - 40);
-		canvas.setColor(Color.GREEN);
-		canvas.drawString("龜", config.getScreenWidth() / 2 - 50, config.getScreenHeight() / 2 - 40);
-		canvas.setColor(Color.GRAY);
-		canvas.drawString("粿", config.getScreenWidth() / 2  + 50, config.getScreenHeight() / 2 - 40);
+		canvas.drawString("遊戲結束囉QQ", config.getScreenWidth() / 2 - 200, config.getScreenHeight() / 2 - 40);
 		canvas.setFont(currentFont);
 		
 		//讓文字淡入淡出效果
@@ -58,7 +54,7 @@ public class ReadyStartGame extends ClickableRole{
 		}
 		canvas.setFont(mPressStartFont);
 		canvas.setColor(new Color(0, 0, 255, mColorAlpha));
-		canvas.drawString("請用滑鼠點擊畫面後開始遊戲", (config.getScreenWidth() / 2) - 180, config.getScreenHeight() / 2 + 50);
+		canvas.drawString("請用滑鼠點擊畫面後重新遊戲", (config.getScreenWidth() / 2) - 180, config.getScreenHeight() / 2 + 50);
 		canvas.setFont(currentFont);
 	}
 }
