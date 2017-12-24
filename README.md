@@ -9,7 +9,7 @@
 ```
 
 # 類別圖
-![](https://github.com/Extra-Yvette/RedTurtleCakes/blob/master_projectfix_yvette/uml/RedTurtleCakes.png?raw=true?raw=true)
+![](https://raw.githubusercontent.com/Extra-Yvette/RedTurtleCakes/master/uml/RedTurtleCakes.png?raw=true)
 
 # 活動圖
 ![](https://github.com/Extra-Yvette/RedTurtleCakes/blob/master/uml/RedTurtleCakes-%E6%B4%BB%E5%8B%95%E5%9C%96.png?raw=true)
