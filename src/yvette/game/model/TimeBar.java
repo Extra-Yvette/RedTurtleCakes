@@ -15,12 +15,18 @@ public class TimeBar extends Role{
 	private int mSecond;
 	//遊戲最大秒數
 	private int mMaxSecond;
+	//TimeBar被Alarm的百分比
+	private double mPercent;
 	//時間到之後要通知的對象
 	private OnTimeBarTimeoutListener mOnTimeBarTimeoutListener;
+	//通知鬧鐘響
+	private OnTimeBarAlarmClockListener mOnTimeBarAlarmClockListener;
+	
 	//每次刷新畫面經過時間
 	private long mSpendTime;
 	//是否有暫停
 	private boolean mIsPause;
+	private boolean mIsAlarm;
 	
 	public TimeBar(){
 		mIsPause = true;
@@ -49,6 +55,11 @@ public class TimeBar extends Role{
 		mOnTimeBarTimeoutListener = listener;
 	}
 
+	public void setOnTimeBarAlarmClockListener(double percent,OnTimeBarAlarmClockListener listener){
+		mPercent = percent;
+		mOnTimeBarAlarmClockListener = listener;
+	}
+	
 	@Override
 	public void onDraw(Graphics canvas) {
 		if(mIsPause) {
@@ -68,6 +79,14 @@ public class TimeBar extends Role{
 		canvas.setColor(getColor());
 		//畫一個實心長方型
 		canvas.fillRect(getX(), getY(), (int)(getW() * percent), getH());
+		
+		//
+		if(!mIsAlarm && mPercent<percent) {
+			mIsAlarm = true;
+			if(mOnTimeBarAlarmClockListener!=null) {
+				mOnTimeBarAlarmClockListener.onTimeBarAlarmClock();
+			}
+		}
 		
 		//將剩餘時間減掉經過時間，若剩餘時間低於0就通知時間到
 		countdownTimer();
@@ -121,6 +140,7 @@ public class TimeBar extends Role{
 			
 			if(mSecond < 0){
 				mSecond = mMaxSecond;
+				mIsAlarm = false;
 				if(mOnTimeBarTimeoutListener != null){
 					mOnTimeBarTimeoutListener.onTimeBarTimeout();
 				}

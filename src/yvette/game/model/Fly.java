@@ -11,7 +11,7 @@ public class Fly  extends ClickableRole{
 	private Config mConfig;
 	
 	public Fly() {
-		this.mSpeed = 1;//每單位時間移動1個像素
+		this.mSpeed = 4;//每單位時間移動1個像素
 		mConfig = RedTurtleCakes.getInstance().getConfig();
 	}
 
@@ -19,15 +19,16 @@ public class Fly  extends ClickableRole{
 	public void onDraw(Graphics canvas) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("Fly");
+//		System.out.println("Fly");
 
 		int x = getX();
 		x=x+1;
 //		if(x >= 300) 
 //		{
 //			x=50;
+//			//setX(-getW()*2);
 //		}
-		System.out.println("Fly"+x);
+//		System.out.println("Fly"+x);
 		setX(x);
 		
 		super.onDraw(canvas);

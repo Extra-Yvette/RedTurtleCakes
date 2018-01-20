@@ -11,6 +11,7 @@ import yvette.game.model.Fly;
 import yvette.game.model.Flyswatter;
 import yvette.game.model.LifeBar;
 import yvette.game.model.MouseDragTool;
+import yvette.game.model.OnTimeBarAlarmClockListener;
 import yvette.game.model.OnTimeBarTimeoutListener;
 import yvette.game.model.ReadDot;
 import yvette.game.model.Score;
@@ -24,7 +25,7 @@ import yvette.game.model.WhitePeach;
  * @author yvette
  *
  */
-public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
+public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener,OnTimeBarAlarmClockListener{
 
 	//時間bar
 	private TimeBar mTimeBar;
@@ -64,7 +65,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 		initScoreBar(config);
 		initTimeBar(config);
 		initLifeBar(config);
-		initFly(config);
+
 				
 	}
 
@@ -75,7 +76,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 		mFly.setEnableCenter(true);
 		mFly.setW(50);
 		mFly.setH(50);
-		mFly.setX(10);
+		mFly.setX(-getW());
 		mFly.setY(mCake.getY()+(mCake.getH()/2));
 		mFly.setColor(Color.BLACK);
 		addRole(mFly);
@@ -277,6 +278,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 		mTimeBar.setSecond(config.getCakeChangeTime());
 		mTimeBar.setMaxSecond(config.getCakeChangeTime());
 		mTimeBar.setOnTimeBarTimeoutListener(this);
+		mTimeBar.setOnTimeBarAlarmClockListener(0.3,this);
 		addRole(mTimeBar);
 	}
 
@@ -318,5 +320,14 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener{
 			mCake.setImage(mConfig.loadImage("/images/peach.png", mCake.getW(), mCake.getH()));
 			break;
 		}
+	}
+
+	@Override
+	public void onTimeBarAlarmClock() {
+		if(mFly!=null) {
+			removeRole(mFly);
+		}
+		initFly(mConfig);		
+		
 	}
 }
