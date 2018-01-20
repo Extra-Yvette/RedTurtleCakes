@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import yvette.game.Config;
 import yvette.game.model.ClickableRole;
@@ -22,7 +23,7 @@ public class Scenes extends Role{
 	private OnChangeScenesListener mOnChangeScenesListener;
 
 	public Scenes() {
-		mRoles = Collections.synchronizedList(new ArrayList<Role>());
+		mRoles = new CopyOnWriteArrayList<Role>();
 		
 		//場景建立時，預設的滑鼠感應區大小
 		mMouse = new Role();
