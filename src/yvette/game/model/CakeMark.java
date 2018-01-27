@@ -10,11 +10,11 @@ import java.awt.image.ImageObserver;
  * @author yvette
  *
  */
-public class CakeMark extends ClickableRole{
+public class CakeMark extends ClickableRole {
 
 	@Override
 	public void onDraw(Graphics canvas) {
-		if(getImage() != null) {
+		if (getImage() != null) {
 			canvas.drawImage(getImage(), getX(), getY(), new ImageObserver() {
 
 				@Override
@@ -22,9 +22,9 @@ public class CakeMark extends ClickableRole{
 					// TODO Auto-generated method stub
 					return false;
 				}
-				
+
 			});
-		}else {
+		} else {
 			super.onDraw(canvas);
 		}
 	}

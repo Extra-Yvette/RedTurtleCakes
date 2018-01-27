@@ -7,5 +7,5 @@ package yvette.game.model;
  * @author yvette
  *
  */
-public class WhitePeach extends ClickableRole{
+public class WhitePeach extends ClickableRole {
 }

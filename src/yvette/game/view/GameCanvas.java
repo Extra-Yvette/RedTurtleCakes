@@ -91,11 +91,11 @@ public class GameCanvas extends Canvas implements Runnable {
 	 */
 	@Override
 	public void update(Graphics g) {
-		if(mCanvasBuffer == null) {
+		if (mCanvasBuffer == null) {
 			Image img = createImage(getWidth(), getHeight());
 			mCanvasBuffer = img.getGraphics();
 			mImageBuffer = img;
-		}else {
+		} else {
 			mCanvasBuffer.clearRect(0, 0, getWidth(), getHeight());
 		}
 		onDraw(mCanvasBuffer);
@@ -108,7 +108,7 @@ public class GameCanvas extends Canvas implements Runnable {
 
 			if (!mIsPause) {
 				try {
-					SwingUtilities.invokeAndWait(()-> repaint());
+					SwingUtilities.invokeAndWait(() -> repaint());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -125,21 +125,23 @@ public class GameCanvas extends Canvas implements Runnable {
 
 	private void onDraw(Graphics canvas) {
 		// 繪制全部場景上的角色
-		if(mScenes != null) {
+		if (mScenes != null) {
 			mScenes.onDraw(canvas);
 		}
 	}
-	
+
 	/**
 	 * 設定目前要顯示在畫面上的場景
+	 * 
 	 * @param scenes
 	 */
 	public void setScenes(Scenes scenes) {
 		mScenes = scenes;
 	}
-	
+
 	/**
 	 * 取得目前顯示在畫面上的場景
+	 * 
 	 * @return
 	 */
 	public Scenes getScenes() {

@@ -6,6 +6,6 @@ package yvette.game.model;
  * @author yvette
  *
  */
-public class Flyswatter extends ClickableRole{
+public class Flyswatter extends ClickableRole {
 
 }

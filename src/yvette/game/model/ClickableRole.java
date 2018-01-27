@@ -8,22 +8,22 @@ import java.awt.Graphics;
  * @author yvette
  *
  */
-public abstract class ClickableRole extends Role{
+public abstract class ClickableRole extends Role {
 	private OnClickListener mOnClickListener;
-	
+
 	@Override
 	public void onDraw(Graphics canvas) {
 		canvas.setColor(getColor());
 		canvas.fillRect(getX(), getY(), getW(), getH());
 	}
-	
-	public void onClick(){
-		if(mOnClickListener != null){
+
+	public void onClick() {
+		if (mOnClickListener != null) {
 			mOnClickListener.onClick();
 		}
 	}
 
-	public void setOnClickListener(OnClickListener listener){
+	public void setOnClickListener(OnClickListener listener) {
 		mOnClickListener = listener;
 	}
 }

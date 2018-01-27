@@ -42,19 +42,18 @@ public class Role {
 		int hh = obj.mH;
 		int hw = obj.mW;
 
-		return ((hx + hw > getX()) && (hx < getX() + mW) && (hy + hh > getY()) && (hy < getY()
-				+ mH));
+		return ((hx + hw > getX()) && (hx < getX() + mW) && (hy + hh > getY()) && (hy < getY() + mH));
 	}
 
 	public int getX() {
-		if(mEnableCenter) {
+		if (mEnableCenter) {
 			return mX - (mW / 2);
 		}
 		return mX;
 	}
 
 	public int getY() {
-		if(mEnableCenter) {
+		if (mEnableCenter) {
 			return mY - (mH / 2);
 		}
 		return mY;
@@ -69,17 +68,17 @@ public class Role {
 	}
 
 	public void setX(int x) {
-		if(mEnableCenter) {
+		if (mEnableCenter) {
 			mX = x + (mW / 2);
-		}else {
+		} else {
 			mX = x;
 		}
 	}
 
 	public void setY(int y) {
-		if(mEnableCenter) {
+		if (mEnableCenter) {
 			mY = y + (mH / 2);
-		}else {
+		} else {
 			mY = y;
 		}
 	}
@@ -99,11 +98,11 @@ public class Role {
 	public Color getColor() {
 		return mColor;
 	}
-	
+
 	public void setImage(Image image) {
 		mImage = image;
 	}
-	
+
 	public Image getImage() {
 		return mImage;
 	}

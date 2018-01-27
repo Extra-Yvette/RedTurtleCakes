@@ -11,42 +11,44 @@ import java.awt.Graphics;
  *
  */
 public class Cake extends ClickableRole {
-	//目前粿的種類(採隨機)，紅龜粿、草仔粿、壽桃
+	// 目前粿的種類(採隨機)，紅龜粿、草仔粿、壽桃
 	private CakeType mType;
-	
+
 	/**
 	 * 指定目前要變成哪種粿type
+	 * 
 	 * @param type
 	 */
 	public void setCakeType(CakeType type) {
 		mType = type;
 	}
-	
+
 	/**
 	 * 取得目前粿的type
+	 * 
 	 * @return
 	 */
 	public CakeType getCakeType() {
 		return mType;
 	}
-	
-	//class GameCanvas通知粿繪圖，此處只要把Cake想顯示的樣子畫到Graphics canvas上即可
+
+	// class GameCanvas通知粿繪圖，此處只要把Cake想顯示的樣子畫到Graphics canvas上即可
 	@Override
 	public void onDraw(Graphics canvas) {
-		if(getImage() != null) {
-			//將粿的圖片畫到畫面上
+		if (getImage() != null) {
+			// 將粿的圖片畫到畫面上
 			canvas.drawImage(getImage(), getX(), getY(), null);
-		}else {
+		} else {
 			debugDraw(canvas);
 		}
 	}
-	
-	//除錯時使用，只會畫色塊XDDD
+
+	// 除錯時使用，只會畫色塊XDDD
 	private void debugDraw(Graphics canvas) {
 		String word = null;
 		Color color = null;
-		
-		switch(mType) {
+
+		switch (mType) {
 		case RED:
 			word = "龜";
 			color = Color.RED;
@@ -60,11 +62,11 @@ public class Cake extends ClickableRole {
 			color = Color.WHITE;
 			break;
 		}
-		
+
 		Font currentFont = canvas.getFont();
 		Font newFont = currentFont.deriveFont(Font.BOLD, 36);
 		canvas.setFont(newFont);
-		
+
 		canvas.setColor(color);
 		canvas.drawString(word, getX(), getY());
 		canvas.setFont(currentFont);

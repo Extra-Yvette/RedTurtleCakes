@@ -12,10 +12,9 @@ import yvette.game.control.RedTurtleCakes;
  * @author yvette
  *
  */
-public class LifeBar extends Role{
-	//愛心個數
+public class LifeBar extends Role {
+	// 愛心個數
 	private int mCount;
-	
 
 	public LifeBar() {
 	}
@@ -44,27 +43,27 @@ public class LifeBar extends Role{
 	public void addCount(int count) {
 		mCount += count;
 	}
-	
+
 	@Override
 	public void onDraw(Graphics canvas) {
 		Font currentFont = canvas.getFont();
 		Config config = RedTurtleCakes.getInstance().getConfig();
 		Font newFont = currentFont.deriveFont(Font.BOLD, 40);
-		
-		//設定新的字型大小
+
+		// 設定新的字型大小
 		canvas.setFont(newFont);
-		
+
 		canvas.setColor(getColor());
-		
-		//將玩家剩餘的愛心生命個數繪到畫面上
+
+		// 將玩家剩餘的愛心生命個數繪到畫面上
 		int lifeCount = mCount;
 		int padding = 50;
-		
-		for(int i = 0; i < lifeCount; i++){
-			canvas.drawString("❤", (config.getScreenWidth() / 2 - 100 ) + (i * padding), 35);
+
+		for (int i = 0; i < lifeCount; i++) {
+			canvas.drawString("❤", (config.getScreenWidth() / 2 - 100) + (i * padding), 35);
 		}
-		
-		//還原字型大小
+
+		// 還原字型大小
 		canvas.setFont(currentFont);
 	}
 }
