@@ -9,6 +9,7 @@ public class Fly  extends ClickableRole{
 	//設定蒼蠅飛的速度
 	private int mSpeed;
 	private Config mConfig;
+	private Cake mCake;
 	
 	public Fly() {
 		this.mSpeed = 4;//每單位時間移動1個像素
@@ -17,24 +18,23 @@ public class Fly  extends ClickableRole{
 
 	@Override
 	public void onDraw(Graphics canvas) {
-		// TODO Auto-generated method stub
-		
-//		System.out.println("Fly");
-
 		int x = getX();
-		x=x+1;
-//		if(x >= 300) 
-//		{
-//			x=50;
-//			//setX(-getW()*2);
-//		}
-//		System.out.println("Fly"+x);
+		x=x+mSpeed;
+
 		setX(x);
 		
+		if (mCake!=null) {
+			if(mCake.getX()<=x) {
+				mSpeed=0;
+			}
+		}
+			
 		super.onDraw(canvas);
-		
 	}
 
+	public void setCake(Cake cake) {
+		mCake=cake;
+	}
 	
 	
 

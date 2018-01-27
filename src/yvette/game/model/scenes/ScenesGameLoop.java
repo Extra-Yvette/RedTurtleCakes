@@ -327,7 +327,8 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener,O
 		if(mFly!=null) {
 			removeRole(mFly);
 		}
-		initFly(mConfig);		
+		initFly(mConfig);
 		
+		mFly.setCake(mCake);		
 	}
 }
