@@ -12,8 +12,8 @@ public class Fly extends ClickableRole {
 	private Cake mCake;
 
 	public Fly() {
-		this.mSpeed = 4;// 每單位時間移動1個像素
 		mConfig = RedTurtleCakes.getInstance().getConfig();
+		this.mSpeed = mConfig.getFlySpeed();// 每單位時間移動1個像素
 	}
 
 	@Override
