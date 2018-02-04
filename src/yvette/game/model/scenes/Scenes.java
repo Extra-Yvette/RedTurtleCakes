@@ -116,10 +116,19 @@ public class Scenes extends Role {
 		// 滑鼠點了左鍵
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			// 判斷畫面上有哪個角色與滑鼠碰撞
-			for (Role role : mRoles) {
+			Role role = null;
+
+			// 畫面上可被點擊的Role應從最後被add到Scenes(場景)上的先判斷
+			for (int i = mRoles.size() - 1; i >= 0; i--) {
+				role = mRoles.get(i);
+
+				// 當role是拖曳中相同物件時，不判斷點擊事件(物件自己不會打到自己)
+				if (role == mMouse) {
+					continue;
+				}
+
 				if (role instanceof ClickableRole) {
 					ClickableRole clickRole = (ClickableRole) role;
-
 					if (role.hitTest(mMouse)) {
 						clickRole.onClick();
 						break;
