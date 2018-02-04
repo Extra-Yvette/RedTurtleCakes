@@ -36,4 +36,7 @@ public class Fly extends ClickableRole {
 		mCake = cake;
 	}
 
+	public void setSpeed(int speed) {
+		mSpeed = speed;
+	}
 }
