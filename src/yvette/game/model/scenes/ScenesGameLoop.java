@@ -77,6 +77,13 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		mFly.setX(-getW());
 		mFly.setY(mCake.getY() + (mCake.getH() / 2));
 		mFly.setColor(Color.BLACK);
+		
+		mFly.setOnClickListener(() -> {
+			// 判斷蒼蠅被打的時候是誰打他
+			if (mMouseDragTool.getCakeType() == CakeType.FLY) {
+				hitFly();
+			}
+		});
 		addRole(mFly);
 	}
 
@@ -108,9 +115,6 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 					break;
 				case WHITE:
 					hitWhiteCake();
-					break;
-				case FLY:
-					hitFly();
 					break;
 				default:
 				}
@@ -148,7 +152,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 	// 打到壽桃
 	private void hitFly() {
 		System.out.println("打到蒼蠅");
-		// TODO ???
+		mFly.setIsAlive(false);	
 	}
 
 	private void hitMiss() {
