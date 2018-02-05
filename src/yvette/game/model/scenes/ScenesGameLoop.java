@@ -15,6 +15,7 @@ import yvette.game.model.MouseDragTool;
 import yvette.game.model.OnTimeBarAlarmClockListener;
 import yvette.game.model.OnTimeBarTimeoutListener;
 import yvette.game.model.ReadDot;
+import yvette.game.model.Role;
 import yvette.game.model.Score;
 import yvette.game.model.TimeBar;
 import yvette.game.model.WhitePeach;
@@ -158,10 +159,11 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 
 	private void hitMiss() {
 		System.out.println("給錯工具");
-		// TODO 給錯工具也會減一顆愛心
+		// 給錯工具也會減一顆愛心
 		mLifeBar.addCount(-1);
+		showTextAnimation(mMouseDragTool, "❤ -1", 24, Color.RED);
 
-		// TODO 判斷愛心扣完，切換畫面到遊戲結束
+		// 判斷愛心扣完，切換畫面到遊戲結束
 		if (mLifeBar.getCount() <= 0) {
 			changeScenes(mConfig.getScenesGameOver());
 		}
@@ -322,6 +324,17 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 			mCake.setImage(mConfig.loadImage("/images/peach.png", mCake.getW(), mCake.getH()));
 			break;
 		}
+	}
+	
+	//文字動畫
+	private void showTextAnimation(Role fllowRold, String text, int fontSize, Color fontCoolor){
+		DamageAnimation ani = new DamageAnimation();
+		ani.setColor(fontCoolor);
+		ani.setX(fllowRold.getX());
+		ani.setY(fllowRold.getY());
+		ani.setText(text, fontSize);
+		ani.setTargetY(ani.getY() + 30);
+		addRole(ani, Integer.MAX_VALUE);
 	}
 
 	@Override

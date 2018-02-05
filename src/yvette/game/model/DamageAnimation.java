@@ -14,6 +14,7 @@ public class DamageAnimation extends Role {
 	private ValueHolder mAlpha = new ValueHolder(255,-8,0);
 	private ValueHolder mY = new ValueHolder(0,-1,0);
 	private Font mTextFont;
+	private int mFontSize = 16;
 	private String mText;
 	
 	class ValueHolder{
@@ -30,6 +31,11 @@ public class DamageAnimation extends Role {
 
 	public void setText(String text) {
 		mText = text;
+	}
+	
+	public void setText(String text, int fontSize) {
+		mText = text;
+		mFontSize = fontSize;
 	}
 
 	public void setTargetY(int y) {
@@ -48,7 +54,7 @@ public class DamageAnimation extends Role {
 
 		// 設定首頁紅龜粿字型大小
 		if (mTextFont == null) {
-			mTextFont = currentFont.deriveFont(Font.CENTER_BASELINE, 16);
+			mTextFont = currentFont.deriveFont(Font.ROMAN_BASELINE, mFontSize);
 		}
 		canvas.setFont(mTextFont);
 
@@ -68,7 +74,7 @@ public class DamageAnimation extends Role {
 		}
 		setY(y);
 
-		canvas.setColor(new Color(0, 0, 255, mAlpha.mRawValue));
+		canvas.setColor(new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue(), mAlpha.mRawValue));
 		canvas.drawString(mText, getX(), getY());
 		canvas.setFont(currentFont);
 	}
