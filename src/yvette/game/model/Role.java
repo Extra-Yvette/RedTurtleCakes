@@ -129,7 +129,7 @@ public class Role {
 		mIsAlve = isAlive;
 	}
 
-	public boolean isALive() {
+	public boolean isAlive() {
 		return mIsAlve;
 	}
 

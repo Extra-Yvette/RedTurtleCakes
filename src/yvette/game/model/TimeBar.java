@@ -129,7 +129,7 @@ public class TimeBar extends Role {
 
 	// 倒數計數
 	private void countdownTimer() {
-		if (isALive()) {
+		if (isAlive()) {
 			long time = 0L;
 			long current = System.currentTimeMillis();
 

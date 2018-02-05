@@ -122,7 +122,7 @@ public class Scenes extends Role {
 		for (int i = mRoles.size() - 1; i >= 0; i--) {
 			Role obj = mRoles.get(i);
 			// 若場景上角色已不存活，將它移除
-			if (!obj.isALive()) {
+			if (!obj.isAlive()) {
 				mRoles.remove(obj);
 			}
 		}
