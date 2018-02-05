@@ -28,6 +28,11 @@ public class Role {
 		mEnableCenter = false;
 	}
 
+	/**
+	 * 設定角色自身中心點為鼠標中心點
+	 * 
+	 * @param enable
+	 */
 	public void setEnableCenter(boolean enable) {
 		mEnableCenter = enable;
 	}
@@ -36,7 +41,6 @@ public class Role {
 	 * 判斷其他物件是否碰撞到目前物件
 	 * 
 	 * @param obj
-	 * @return
 	 */
 	public boolean hitTest(Role obj) {
 		int hx = obj.getX();
@@ -47,6 +51,9 @@ public class Role {
 		return ((hx + hw > getX()) && (hx < getX() + mW) && (hy + hh > getY()) && (hy < getY() + mH));
 	}
 
+	/**
+	 * 角色存在於場景上時的x軸
+	 */
 	public int getX() {
 		if (mEnableCenter) {
 			return mX - (mW / 2);
@@ -54,6 +61,9 @@ public class Role {
 		return mX;
 	}
 
+	/**
+	 * 角色存在於場景上時的y軸
+	 */
 	public int getY() {
 		if (mEnableCenter) {
 			return mY - (mH / 2);
@@ -61,14 +71,25 @@ public class Role {
 		return mY;
 	}
 
+	/**
+	 * 取得角色高
+	 */
 	public int getH() {
 		return mH;
 	}
 
+	/**
+	 * 取得角色寬
+	 */
 	public int getW() {
 		return mW;
 	}
 
+	/**
+	 * 設定角色存在於場景上時的x軸
+	 * 
+	 * @param x
+	 */
 	public void setX(int x) {
 		if (mEnableCenter) {
 			mX = x + (mW / 2);
@@ -77,6 +98,11 @@ public class Role {
 		}
 	}
 
+	/**
+	 * 設定角色存在於場景上時的y軸
+	 * 
+	 * @param y
+	 */
 	public void setY(int y) {
 		if (mEnableCenter) {
 			mY = y + (mH / 2);
@@ -85,27 +111,39 @@ public class Role {
 		}
 	}
 
+	/**
+	 * 設定角色寬
+	 * 
+	 * @param w
+	 */
 	public void setW(int w) {
 		mW = w;
 	}
 
+	/**
+	 * 設定角色高度
+	 * 
+	 * @param h
+	 */
 	public void setH(int h) {
 		mH = h;
 	}
-	
+
 	/**
 	 * 設定角色(Role)在場景(Scenes)上顯示的圖層，數值越大角色在越上層
+	 * 
 	 * @param order
 	 */
-	public void setLayerOrder(int order){
+	public void setLayerOrder(int order) {
 		mLayerOrder = order;
 	}
-	
+
 	/**
 	 * 取得角色(Role)在場景(Scenes)上顯示的圖層，數值越大角色在越上層
+	 * 
 	 * @return
 	 */
-	public int getLayerOrder(){
+	public int getLayerOrder() {
 		return mLayerOrder;
 	}
 
@@ -125,10 +163,20 @@ public class Role {
 		return mImage;
 	}
 
+	/**
+	 * 設置角色狀態是否存活在場景上，true:存活在場景上，false:不存活在場景上，將會從場景上被移除
+	 * 
+	 * @param isAlive
+	 */
 	public void setIsAlive(boolean isAlive) {
 		mIsAlve = isAlive;
 	}
 
+	/**
+	 * 取得角色狀態是否存活在場景上，true:存活在場景上，false:不存活在場景上，將會從場景上被移除
+	 * 
+	 * @return
+	 */
 	public boolean isAlive() {
 		return mIsAlve;
 	}
