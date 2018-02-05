@@ -11,19 +11,29 @@ import java.awt.Graphics;
  *
  */
 public class DamageAnimation extends Role {
-	private int mColorAlpha = 255;
-	private int mOffsetValueAlpha = -8;
-	private int mOffsetValueY = -1;
+	private ValueHolder mAlpha = new ValueHolder(255,-8,0);
+	private ValueHolder mY = new ValueHolder(0,-1,0);
 	private Font mTextFont;
 	private String mText;
-	private int mTargetY;
+	
+	class ValueHolder{
+		int mRawValue;
+		int mOffsetValue;
+		int mTargetValue;
+		
+		ValueHolder(int raw, int offset, int target){
+			mRawValue = raw;
+			mOffsetValue = offset;
+			mTargetValue = target;
+		}
+	}
 
 	public void setText(String text) {
 		mText = text;
 	}
 
 	public void setTargetY(int y) {
-		mTargetY = y;
+		mY.mTargetValue = y;
 	}
 
 	@Override
@@ -43,19 +53,22 @@ public class DamageAnimation extends Role {
 		canvas.setFont(mTextFont);
 
 		// 讓文字淡出效果
-		mColorAlpha += mOffsetValueAlpha;
-		if (mColorAlpha < 0) {
-			mColorAlpha = 0;
+		mAlpha.mRawValue += mAlpha.mOffsetValue;
+		if (mAlpha.mRawValue < 0) {
+			mAlpha.mRawValue = 0;
 			setIsAlive(false);
 		}
-		int y = getY() + mOffsetValueY;
+		
+		mY.mRawValue = getY();
+		
+		int y = mY.mRawValue + mY.mOffsetValue;
 
-		if (y > mTargetY) {
-			y = mTargetY;
+		if (y > mY.mTargetValue) {
+			y = mY.mTargetValue;
 		}
 		setY(y);
 
-		canvas.setColor(new Color(0, 0, 255, mColorAlpha));
+		canvas.setColor(new Color(0, 0, 255, mAlpha.mRawValue));
 		canvas.drawString(mText, getX(), getY());
 		canvas.setFont(currentFont);
 	}
