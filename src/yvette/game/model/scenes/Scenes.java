@@ -64,14 +64,35 @@ public class Scenes extends Role {
 	public void onUnload() {
 		System.out.println("onUnload" + getClass().getName());
 	}
+	
+	/**
+	 * 將角色加到場景上
+	 * 
+	 * @param role 角色
+	 * @param layerOrder 角色在場景上的圖層
+	 */
+	public void addRole(Role role) {
+		addRole(role, 0);
+	}
 
 	/**
 	 * 將角色加到場景上
 	 * 
-	 * @param role
+	 * @param role 角色
+	 * @param layerOrder 角色在場景上的圖層
 	 */
-	public void addRole(Role role) {
+	public void addRole(Role role, int layerOrder) {
+		role.setLayerOrder(layerOrder);
 		mRoles.add(role);
+		mRoles.sort((a, b)->{
+			if(a.getLayerOrder() > b.getLayerOrder()){
+				return 1;
+			}else if(a.getLayerOrder() < b.getLayerOrder()){
+				return -1;
+			}else{
+				return 0;
+			}
+		});
 	}
 
 	/**

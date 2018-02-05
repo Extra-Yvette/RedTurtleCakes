@@ -16,6 +16,8 @@ public class Role {
 	private int mY;
 	private int mW;
 	private int mH;
+	/** 圖層 */
+	private int mLayerOrder;
 	private Color mColor;
 	private boolean mIsAlve;
 	private boolean mEnableCenter;
@@ -89,6 +91,22 @@ public class Role {
 
 	public void setH(int h) {
 		mH = h;
+	}
+	
+	/**
+	 * 設定角色(Role)在場景(Scenes)上顯示的圖層，數值越大角色在越上層
+	 * @param order
+	 */
+	public void setLayerOrder(int order){
+		mLayerOrder = order;
+	}
+	
+	/**
+	 * 取得角色(Role)在場景(Scenes)上顯示的圖層，數值越大角色在越上層
+	 * @return
+	 */
+	public int getLayerOrder(){
+		return mLayerOrder;
 	}
 
 	public void setColor(Color color) {

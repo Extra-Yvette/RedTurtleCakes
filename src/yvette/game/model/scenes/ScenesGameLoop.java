@@ -7,6 +7,7 @@ import yvette.game.Config;
 import yvette.game.model.Cake;
 import yvette.game.model.CakeMark;
 import yvette.game.model.CakeType;
+import yvette.game.model.DamageAnimation;
 import yvette.game.model.Fly;
 import yvette.game.model.Flyswatter;
 import yvette.game.model.LifeBar;
@@ -59,16 +60,16 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 	}
 
 	private void initialize(Config config) {
-		initTools(config);
-		initCake(config);
-		initCurrentTool(config);
-		initScoreBar(config);
-		initTimeBar(config);
-		initLifeBar(config);
+		initTools(config, 100);
+		initCake(config,200);
+		initCurrentTool(config,1000);
+		initScoreBar(config,400);
+		initTimeBar(config,500);
+		initLifeBar(config,600);
 
 	}
 
-	private void initFly(Config config) {
+	private void initFly(Config config, int layerOrder) {
 		// 建立蒼蠅在場景上
 		mFly = new Fly();
 		mFly.setEnableCenter(true);
@@ -84,11 +85,11 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 				hitFly();
 			}
 		});
-		addRole(mFly);
+		addRole(mFly, layerOrder);
 	}
 
 	// 初始化畫面上的粿
-	private void initCake(Config config) {
+	private void initCake(Config config, int layerOrder) {
 		mRandom = new Random();
 		mCake = new Cake();
 		mCake.setW(100);
@@ -125,7 +126,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		});
 
 		randomChangeCake();
-		addRole(mCake);
+		addRole(mCake, layerOrder);
 	}
 
 	// 打到紅龜粿
@@ -167,7 +168,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 	}
 
 	// 初始化跟著滑鼠鼠標移動的工具
-	private void initCurrentTool(Config config) {
+	private void initCurrentTool(Config config, int layerOrder) {
 		mMouseDragTool = new MouseDragTool();
 		mMouseDragTool.setEnableCenter(true);
 		mMouseDragTool.setW(50);
@@ -175,22 +176,22 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 
 		setMouseRole(mMouseDragTool);
 
-		addRole(mMouseDragTool);
+		addRole(mMouseDragTool, layerOrder);
 	}
 
 	// 初始化總分分數面版
-	private void initScoreBar(Config config) {
+	private void initScoreBar(Config config, int layerOrder) {
 		mScoreBar = new Score();
 		mScoreBar.setColor(Color.BLACK);
 		mScoreBar.setY(25);
 		mScoreBar.setW(150);
 		mScoreBar.setH(30);
 		mScoreBar.setX(config.getScreenWidth() - mScoreBar.getW());
-		addRole(mScoreBar);
+		addRole(mScoreBar, layerOrder);
 	}
 
 	// 初始化4個按鈕(切換工具)
-	private void initTools(Config config) {
+	private void initTools(Config config, int layerOrder) {
 		int baseX = config.getScreenWidth() / 2 - 200;
 		int paddingX = 125;
 		// 粿印
@@ -210,7 +211,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 					mConfig.loadImage("/images/redTurtleUtil.png", mMouseDragTool.getW(), mMouseDragTool.getH()));
 		});
 
-		addRole(cakeMark);
+		addRole(cakeMark, layerOrder);
 
 		// 草阿粿點紅點
 		ReadDot readDot = new ReadDot();
@@ -229,7 +230,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		});
 
 		// 將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
-		addRole(readDot);
+		addRole(readDot, layerOrder);
 
 		// 壽模模具
 		WhitePeach whitePeach = new WhitePeach();
@@ -247,7 +248,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		});
 
 		// 將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
-		addRole(whitePeach);
+		addRole(whitePeach, layerOrder);
 
 		// 蒼蠅拍
 		Flyswatter flyswatter = new Flyswatter();
@@ -265,11 +266,11 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		});
 
 		// 將按鈕放到可被檢查是否有點擊到按鈕的容器(陣列)
-		addRole(flyswatter);
+		addRole(flyswatter, layerOrder);
 	}
 
 	// 初始化時間條面板
-	private void initTimeBar(Config config) {
+	private void initTimeBar(Config config, int layerOrder) {
 		mTimeBar = new TimeBar();
 		mTimeBar.setColor(Color.PINK);
 		mTimeBar.setX(10);
@@ -280,10 +281,10 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		mTimeBar.setMaxSecond(config.getCakeChangeTime());
 		mTimeBar.setOnTimeBarTimeoutListener(this);
 		mTimeBar.setOnTimeBarAlarmClockListener(0.3, this);
-		addRole(mTimeBar);
+		addRole(mTimeBar, layerOrder);
 	}
 
-	private void initLifeBar(Config config) {
+	private void initLifeBar(Config config, int layerOrder) {
 		mLifeBar = new LifeBar();
 		mLifeBar.setColor(Color.RED);
 		mLifeBar.setX(config.getScreenWidth() - 100);
@@ -291,7 +292,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		mLifeBar.setW(200);
 		mLifeBar.setH(20);
 		mLifeBar.setCount(config.getLifeDefault());
-		addRole(mLifeBar);
+		addRole(mLifeBar, layerOrder);
 	}
 
 	// 時間條倒數完時，時間到事件
@@ -328,7 +329,8 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		if (mFly != null) {
 			removeRole(mFly);
 		}
-		initFly(mConfig);
+		//蒼蠅的角色圖層要在粿之上，因此用cake的圖層+1為蒼蠅的圖層
+		initFly(mConfig, mCake.getLayerOrder() + 1);
 
 		mFly.setCake(mCake);
 	}
