@@ -20,7 +20,7 @@ public class Config {
 	// 遊戲視窗大小-高
 	private int mScreenHeight = 480;
 	// 蒼蠅飛行速度
-	private int mFlySpeed = 1;
+	private int mFlySpeed = 2;
 	// 遊戲中時，畫面正中間的粿間隔多久會變換
 	private int mCakeChangeTime = 5;
 	// 敲紅龜粿可獲得分數
@@ -32,7 +32,7 @@ public class Config {
 	// 玩家每次重新開始玩遊戲的愛心個數
 	private int mLifeDefault = 5;
 	// 遊戲繪圖每秒繪制張數
-	private int mFPS = 60;
+	private int mFPS = 30;
 
 	// 開場的景場名稱
 	// 準備開始遊戲

@@ -76,7 +76,7 @@ public class ScenesGameLoop extends Scenes implements OnTimeBarTimeoutListener, 
 		mFly.setEnableCenter(true);
 		mFly.setW(50);
 		mFly.setH(50);
-		mFly.setX(-getW());
+		mFly.setX(-mFly.getW());
 		mFly.setY(mCake.getY() + (mCake.getH() / 2));
 		mFly.setColor(Color.BLACK);
 		

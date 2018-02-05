@@ -13,23 +13,30 @@ public class Fly extends ClickableRole {
 
 	public Fly() {
 		mConfig = RedTurtleCakes.getInstance().getConfig();
-		this.mSpeed = mConfig.getFlySpeed();// 每單位時間移動1個像素
+		mSpeed = mConfig.getFlySpeed();// 每單位時間移動1個像素
 	}
 
 	@Override
 	public void onDraw(Graphics canvas) {
-		int x = getX();
-		x = x + mSpeed;
-
-		setX(x);
-
-		if (mCake != null) {
-			if (mCake.getX() <= x) {
-				mSpeed = 0;
-			}
+		if(mSpeed == 0){
+			super.onDraw(canvas);
+			return;
 		}
+		//讓蒼蠅每次移動一格就重新繪圖一次，防止當speed過大時，蒼蠅移動會出現跳格的方式移動
+		for(int i = 0; i < mSpeed; i++){
+			int x = getX();
+			x = x + mSpeed;
 
-		super.onDraw(canvas);
+			setX(x);
+
+			if (mCake != null) {
+				if (mCake.getX() <= x) {
+					mSpeed = 0;
+				}
+			}
+
+			super.onDraw(canvas);
+		}
 	}
 
 	public void setCake(Cake cake) {
